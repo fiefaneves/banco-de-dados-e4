@@ -1,0 +1,24 @@
+!SESSION 2025-06-28 14:47:25.717 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_281
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  C:\Users\jplim\Downloads\eercase-v1.0.12\eclipse\workspace\banco_dados\mini_mundo_att.eer
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\Users\jplim\Downloads\eercase-v1.0.12\eclipse\workspace\banco_dados\mini_mundo_att.eer
+
+!ENTRY org.eclipse.ui 2 0 2025-06-28 14:48:17.038
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.bindings' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2025-06-28 14:48:17.038
+!MESSAGE Cannot bind to an undefined command: plug-in='br.ufpe.cin.eercase.diagram', id='eer.diagram.updateDiagram'
+!SESSION 2025-06-28 14:53:00.615 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_281
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  C:\Users\jplim\Documents\Programação\banco-de-dados-e4\modelo_relacional\mini_mundo.eer
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\Users\jplim\Documents\Programação\banco-de-dados-e4\modelo_relacional\mini_mundo.eer
+
+!ENTRY org.eclipse.ui 2 0 2025-06-28 14:53:02.711
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.bindings' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2025-06-28 14:53:02.711
+!MESSAGE Cannot bind to an undefined command: plug-in='br.ufpe.cin.eercase.diagram', id='eer.diagram.updateDiagram'
