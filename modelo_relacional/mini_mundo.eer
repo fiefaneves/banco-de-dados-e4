@@ -55,8 +55,8 @@
     <nodes xmi:type="eer:Relationship" xmi:id="_D_b4UEZaEfC5orWyJcy45w" name="Produz" relationshipLink="_FJM8wEZaEfC5orWyJcy45w _GAnF4EZaEfC5orWyJcy45w _Jn4ukEZaEfC5orWyJcy45w"/>
     <nodes xmi:type="eer:Relationship" xmi:id="_Gdq_4EZbEfC5orWyJcy45w" name="Usa" relationshipLink="_KPC_wEZbEfC5orWyJcy45w _Kwe44EZbEfC5orWyJcy45w"/>
     <nodes xmi:type="eer:Relationship" xmi:id="_OkP_EEZTEfCmq9CWuq4Zaw" name="Compra" relationshipLink="_RrSogEZTEfCmq9CWuq4Zaw _SNJ_cEZTEfCmq9CWuq4Zaw"/>
-    <nodes xmi:type="eer:Entity" xmi:id="__EsCYFRLEfC-RY9vfvqGqQ" name="Acidente" AttributeLinkSource="_FKyd8FRMEfC-RY9vfvqGqQ _H9oZAFRMEfC-RY9vfvqGqQ _MNazMFRMEfC-RY9vfvqGqQ _APjysFRPEfC-RY9vfvqGqQ" relationshipLink="_QamlUFRMEfC-RY9vfvqGqQ"/>
-    <nodes xmi:type="eer:Relationship" xmi:id="_BkwLYFRMEfC-RY9vfvqGqQ" name="Ocorre" relationshipLink="_QamlUFRMEfC-RY9vfvqGqQ _WTvtgFRNEfC-RY9vfvqGqQ"/>
+    <nodes xmi:type="eer:Entity" xmi:id="__EsCYFRLEfC-RY9vfvqGqQ" name="Acidente" AttributeLinkSource="_FKyd8FRMEfC-RY9vfvqGqQ _H9oZAFRMEfC-RY9vfvqGqQ _MNazMFRMEfC-RY9vfvqGqQ _APjysFRPEfC-RY9vfvqGqQ" relationshipLink="_QamlUFRMEfC-RY9vfvqGqQ _BYHEQFRREfCs9N78fe1F7Q"/>
+    <nodes xmi:type="eer:Relationship" xmi:id="_BkwLYFRMEfC-RY9vfvqGqQ" name="Ocorre" relationshipLink="_QamlUFRMEfC-RY9vfvqGqQ _WTvtgFRNEfC-RY9vfvqGqQ _BYHEQFRREfCs9N78fe1F7Q"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_FKuMgFRMEfC-RY9vfvqGqQ" name="id" type="IDENTIFIER" AttributeLinkTarget="_FKyd8FRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_H9kHkFRMEfC-RY9vfvqGqQ" name="data_acidente" dataType="TIMESTAMP" AttributeLinkTarget="_H9oZAFRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_MNV6sFRMEfC-RY9vfvqGqQ" name="gravidade" AttributeLinkTarget="_MNazMFRMEfC-RY9vfvqGqQ"/>
@@ -140,6 +140,7 @@
     <links xmi:type="eer:AttributeLink" xmi:id="_zqoSgFROEfC-RY9vfvqGqQ" source="_ARJiUEZSEfCmq9CWuq4Zaw" target="_zqkBEFROEfC-RY9vfvqGqQ"/>
     <links xmi:type="eer:AttributeLink" xmi:id="_78xu4FROEfC-RY9vfvqGqQ" source="_VD4cUEZQEfCmq9CWuq4Zaw" target="_78uEgFROEfC-RY9vfvqGqQ"/>
     <links xmi:type="eer:AttributeLink" xmi:id="_APjysFRPEfC-RY9vfvqGqQ" source="__EsCYFRLEfC-RY9vfvqGqQ" target="_APfhQFRPEfC-RY9vfvqGqQ"/>
+    <links xmi:type="eer:RelationshipLink" xmi:id="_BYHEQFRREfCs9N78fe1F7Q" source="__EsCYFRLEfC-RY9vfvqGqQ" target="_BkwLYFRMEfC-RY9vfvqGqQ" cardinality="MANY"/>
   </eer:Schema>
   <notation:Diagram xmi:id="_POAPEEZFEfCy8KFOTv57nA" type="Eer" element="_PNbnUEZFEfCy8KFOTv57nA" name="default.eer" measurementUnit="Pixel">
     <children xmi:type="notation:Node" xmi:id="_sOFHgEZPEfCmq9CWuq4Zaw" type="2001" element="_sNyMkEZPEfCmq9CWuq4Zaw">
@@ -1170,6 +1171,18 @@
       <styles xmi:type="notation:FontStyle" xmi:id="_APln4lRPEfC-RY9vfvqGqQ" fontName="Segoe UI"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_APln41RPEfC-RY9vfvqGqQ" points="[-82, -48, 1185, 697]$[-1267, -745, 0, 0]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_APmO8FRPEfC-RY9vfvqGqQ" id="(0.9057971014492754,0.5614035087719298)"/>
+    </edges>
+    <edges xmi:type="notation:Edge" xmi:id="_BYISYFRREfCs9N78fe1F7Q" type="4006" element="_BYHEQFRREfCs9N78fe1F7Q" source="_BkwycFRMEfC-RY9vfvqGqQ" target="__ErbUFRLEfC-RY9vfvqGqQ">
+      <children xmi:type="notation:DecorationNode" xmi:id="_BYISZFRREfCs9N78fe1F7Q" type="6006">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BYISZVRREfCs9N78fe1F7Q" x="7" y="15"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_BYISZlRREfCs9N78fe1F7Q" type="6007">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BYISZ1RREfCs9N78fe1F7Q" x="5" y="5"/>
+      </children>
+      <styles xmi:type="notation:RoutingStyle" xmi:id="_BYISYVRREfCs9N78fe1F7Q"/>
+      <styles xmi:type="notation:FontStyle" xmi:id="_BYISYlRREfCs9N78fe1F7Q" fontName="Segoe UI"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_BYISY1RREfCs9N78fe1F7Q" points="[78, -1, -79, 1]$[158, -75, 1, -73]"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_BYJggFRREfCs9N78fe1F7Q" id="(0.010869565217391304,0.4298245614035088)"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>
