@@ -7,10 +7,11 @@ try:
     cursor.execute("""
         CREATE TABLE Responsavel (
             CPF TEXT PRIMARY KEY,
+            Nome TEXT,
             End_rua TEXT,
-            End_complemento TEXT,
             End_cep TEXT,
             End_bairro TEXT
+            Estado TEXT
         )
     """)
 
@@ -62,10 +63,11 @@ try:
     cursor.execute("""
         CREATE TABLE Setor (
             CNPJ_Fabrica TEXT,
+            codigo TEXT,
             nome TEXT,
             finalidade TEXT,
             data_criacao DATE, -- Renomeado de data para data_criacao
-            CONSTRAINT PK_SETOR PRIMARY KEY (CNPJ_Fabrica, nome),
+            CONSTRAINT PK_SETOR PRIMARY KEY (CNPJ_Fabrica, codigo),
             CONSTRAINT FK_SETOR_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
         )
     """)
@@ -76,8 +78,8 @@ try:
             MODELO TEXT,
             DATA_INST DATE,
             CNPJ_Fabrica_Setor TEXT NOT NULL,
-            NOME_Setor TEXT NOT NULL,
-            CONSTRAINT FK_MAQUINA_SETOR FOREIGN KEY (CNPJ_Fabrica_Setor, NOME_Setor) REFERENCES Setor(CNPJ_Fabrica, nome)
+            COD_Setor TEXT NOT NULL,
+            CONSTRAINT FK_MAQUINA_SETOR FOREIGN KEY (CNPJ_Fabrica_Setor, COD_Setor) REFERENCES Setor(CNPJ_Fabrica, codigo)
         )
     """)
 
@@ -152,7 +154,7 @@ try:
             ID_PRODUTO TEXT,
             CPF_OOMPALOOMPA TEXT,
             ID_MAQUINA TEXT,
-            CONSTRAINT PK_PRODUZ PRIMARY KEY (ID_PRODUTO, CPF_OOMPALOOMPA),
+            CONSTRAINT PK_PRODUZ PRIMARY KEY (ID_PRODUTO, CPF_OOMPALOOMPA, ID_MAQUINA),
             CONSTRAINT FK_PRODUZ_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
             CONSTRAINT FK_PRODUZ_OOMPA FOREIGN KEY (CPF_OOMPALOOMPA) REFERENCES OompaLoompa(CPF_FUNC),
             CONSTRAINT FK_PRODUZ_MAQ FOREIGN KEY (ID_MAQUINA) REFERENCES Maquina(ID)
@@ -163,7 +165,6 @@ try:
         CREATE TABLE USA (
             ID_PRODUTO TEXT,
             COD_INGREDIENTE TEXT,
-            quantidade REAL,
             CONSTRAINT PK_USA PRIMARY KEY (ID_PRODUTO, COD_INGREDIENTE),
             CONSTRAINT FK_USA_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
             CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
