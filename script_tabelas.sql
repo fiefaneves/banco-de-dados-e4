@@ -1,0 +1,159 @@
+-- =================================================================
+-- SCRIPT DE CRIAÇÃO DAS TABELAS - FÁBRICA DE CHOCOLATE
+-- =================================================================
+
+-- 1. Entidades que não dependem de outras
+-- =================================================================
+
+CREATE TABLE Responsavel (
+    CPF VARCHAR2(11) PRIMARY KEY,
+    Nome VARCHAR2(100),
+    End_rua VARCHAR2(100),
+    End_cep VARCHAR2(8),
+    End_bairro VARCHAR2(50),
+    End_estado VARCHAR2(50)
+);
+
+CREATE TABLE Fabrica (
+    CNPJ VARCHAR2(14) PRIMARY KEY,
+    data_fundacao DATE
+);
+
+CREATE TABLE Ingrediente (
+    COD VARCHAR2(10) PRIMARY KEY,
+    NOME VARCHAR2(100) NOT NULL,
+    QTD NUMBER(10,2)
+);
+
+CREATE TABLE Produto (
+    ID VARCHAR2(10) PRIMARY KEY,
+    NOME VARCHAR2(100) NOT NULL,
+    PRECO NUMBER(8,2),
+    DATA_VAL DATE,
+    DESC_PRODUTO VARCHAR2(200) -- Renomeado de DESC para evitar conflito com palavra reservada
+);
+
+CREATE TABLE Funcionario (
+    CPF VARCHAR2(11) PRIMARY KEY,
+    SALARIO NUMBER(10,2),
+    NOME VARCHAR2(100),
+    CPF_CHEFE VARCHAR2(11),
+    CONSTRAINT FK_FUNC_SUPERVISOR FOREIGN KEY (CPF_CHEFE) REFERENCES Funcionario(CPF)
+);
+
+
+-- 2. Entidades com dependências (FKs)
+-- =================================================================
+
+CREATE TABLE Criança (
+    CPF VARCHAR2(11) PRIMARY KEY,
+    nome VARCHAR2(100),
+    data_nascimento DATE,
+    CPF_Responsavel VARCHAR2(11),
+    CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
+);
+
+CREATE TABLE Setor (
+    CNPJ_Fabrica VARCHAR2(14),
+    COD_SETOR VARCHAR2(10),
+    nome VARCHAR2(50),
+    finalidade VARCHAR2(200),
+    data_criacao DATE, -- Renomeado de data para data_criacao
+    CONSTRAINT PK_SETOR PRIMARY KEY (CNPJ_Fabrica, COD_SETOR),
+    CONSTRAINT FK_SETOR_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
+);
+
+CREATE TABLE Maquina (
+    ID VARCHAR2(10) PRIMARY KEY,
+    MODELO VARCHAR2(50),
+    DATA_INST DATE,
+    CNPJ_Fabrica_Setor VARCHAR2(14) NOT NULL,
+    COD_Setor VARCHAR2(50) NOT NULL,
+    CONSTRAINT FK_MAQUINA_SETOR FOREIGN KEY (CNPJ_Fabrica_Setor, COD_Setor) REFERENCES Setor(CNPJ_Fabrica, COD_Setor)
+);
+
+-- 3. Mapeamento da Hierarquia de Herança
+-- =================================================================
+
+CREATE TABLE OompaLoompa (
+    CPF_FUNC VARCHAR2(11) PRIMARY KEY,
+    TRIBO VARCHAR2(50),
+    CONSTRAINT FK_OOMPA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
+);
+
+CREATE TABLE Pessoa (
+    CPF_FUNC VARCHAR2(11) PRIMARY KEY,
+    CONSTRAINT FK_PESSOA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
+);
+
+CREATE TABLE Chiclete (
+    ID_PRODUTO VARCHAR2(10) PRIMARY KEY,
+    CONSTRAINT FK_CHICLETE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID)
+);
+
+CREATE TABLE Chocolate (
+    ID_PRODUTO VARCHAR2(10) PRIMARY KEY,
+    TIPO VARCHAR2(50),
+    RECHEIO VARCHAR2(50),
+    CPF_CRIANCA VARCHAR2(11),
+    CONSTRAINT FK_CHOCOLATE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
+    CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
+);
+
+
+-- 4. Tabelas de Atributos Multivalorados e Relacionamentos
+-- =================================================================
+
+CREATE TABLE Contatos (
+    CPF_Responsavel VARCHAR2(11),
+    Contatos VARCHAR2(100),
+    CONSTRAINT PK_CONTATOS PRIMARY KEY (CPF_Responsavel, Contatos),
+    CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
+);
+
+CREATE TABLE Visita (
+    CPF_Criança VARCHAR2(11),
+    CNPJ_Fabrica VARCHAR2(14),
+    data_visita DATE,
+    CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Criança, CNPJ_Fabrica),
+    CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Criança) REFERENCES Criança(CPF),
+    CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
+);
+
+CREATE TABLE Acidente (
+    ID VARCHAR2(10) PRIMARY KEY,
+    data_acidente DATE,
+    gravidade VARCHAR2(50),
+    musica VARCHAR2(100),
+    CPF_Criança_Visita VARCHAR2(11),
+    CNPJ_Fabrica_Visita VARCHAR2(14),
+    CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Criança_Visita, CNPJ_Fabrica_Visita) REFERENCES Visita(CPF_Criança, CNPJ_Fabrica),
+    CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita) -- Garante que uma visita tenha no máximo um acidente
+);
+
+CREATE TABLE PRODUZ (
+    ID_PRODUTO VARCHAR2(10),
+    CPF_OOMPALOOMPA VARCHAR2(11),
+    ID_MAQUINA VARCHAR2(10),
+    CONSTRAINT PK_PRODUZ PRIMARY KEY (ID_PRODUTO, CPF_OOMPALOOMPA, ID_MAQUINA),
+    CONSTRAINT FK_PRODUZ_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
+    CONSTRAINT FK_PRODUZ_OOMPA FOREIGN KEY (CPF_OOMPALOOMPA) REFERENCES OompaLoompa(CPF_FUNC),
+    CONSTRAINT FK_PRODUZ_MAQ FOREIGN KEY (ID_MAQUINA) REFERENCES Maquina(ID)
+);
+
+CREATE TABLE USA (
+    ID_PRODUTO VARCHAR2(10),
+    COD_INGREDIENTE VARCHAR2(10),
+    CONSTRAINT PK_USA PRIMARY KEY (ID_PRODUTO, COD_INGREDIENTE),
+    CONSTRAINT FK_USA_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
+    CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
+);
+
+CREATE TABLE BilheteDourado (
+    COD VARCHAR2(10) PRIMARY KEY,
+    CATEGORIA VARCHAR2(50),
+    DATA_ENCONTRADO DATE,
+    LOCAL_COMPRA VARCHAR2(100),
+    ID_CHOCOLATE VARCHAR2(10),
+    CONSTRAINT FK_BILHETE_CHOCO FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID_PRODUTO)
+);
