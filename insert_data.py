@@ -98,7 +98,7 @@ def inserir_dados_exemplo():
         # Inserir Setor
         print("Inserindo Setor...")
         cursor.execute("""
-            INSERT INTO Setor (CNPJ_Fabrica, nome, finalidade, data_criacao) 
+            INSERT INTO Setor (CNPJ_Fabrica, COD_Setor, finalidade, data_criacao) 
             VALUES ('12345678000199', 'Produção', 'Fabricação de chocolates e doces', '1971-02-01')
         """)
         
@@ -231,7 +231,7 @@ def verificar_dados():
     cursor = conn.cursor()
     
     tabelas = [
-        'Responsavel', 'Contatos', 'Fabrica', 'Criança', 'Funcionario', 
+        'Responsavel', 'ContatosResponsavel', 'Fabrica', 'Criança', 'Funcionario', 
         'OompaLoompa', 'Pessoa', 'Setor', 'Maquina', 'Ingrediente', 
         'Produto', 'Chocolate', 'Chiclete', 'Visita', 'Acidente', 
         'PRODUZ', 'USA', 'BilheteDourado'
