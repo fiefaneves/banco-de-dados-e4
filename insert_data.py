@@ -50,8 +50,8 @@ def inserir_dados_exemplo():
             VALUES ('12345678000199', '1971-01-15')
         """)
         
-        # Inserir Crianças
-        print("Inserindo Crianças...")
+        # Inserir Criancas
+        print("Inserindo Criancas...")
         criancas = [
             ('11111111111', 'Charlie Bucket', '2010-05-15', '12345678901'),
             ('22222222222', 'Veruca Salt', '2009-08-20', '98765432109'),
@@ -59,7 +59,7 @@ def inserir_dados_exemplo():
         ]
         
         cursor.executemany("""
-            INSERT INTO Criança (CPF, nome, data_nascimento, CPF_Responsavel) 
+            INSERT INTO Crianca (CPF, nome, data_nascimento, CPF_Responsavel) 
             VALUES (?, ?, ?, ?)
         """, criancas)
         
@@ -164,14 +164,14 @@ def inserir_dados_exemplo():
         ]
         
         cursor.executemany("""
-            INSERT INTO Visita (CPF_Criança, CNPJ_Fabrica, data_visita) 
+            INSERT INTO Visita (CPF_Crianca, CNPJ_Fabrica, data_visita) 
             VALUES (?, ?, ?)
         """, visitas)
         
         # Inserir Acidente (só para Veruca Salt)
         print("Inserindo Acidente...")
         cursor.execute("""
-            INSERT INTO Acidente (ID, data_acidente, gravidade, musica, CPF_Criança_Visita, CNPJ_Fabrica_Visita) 
+            INSERT INTO Acidente (ID, data_acidente, gravidade, musica, CPF_Crianca_Visita, CNPJ_Fabrica_Visita) 
             VALUES ('ACD001', '2024-07-01', 'Leve', 'Oompa Loompa Song', '22222222222', '12345678000199')
         """)
         
@@ -231,7 +231,7 @@ def verificar_dados():
     cursor = conn.cursor()
     
     tabelas = [
-        'Responsavel', 'ContatosResponsavel', 'Fabrica', 'Criança', 'Funcionario', 
+        'Responsavel', 'ContatosResponsavel', 'Fabrica', 'Crianca', 'Funcionario', 
         'OompaLoompa', 'Pessoa', 'Setor', 'Maquina', 'Ingrediente', 
         'Produto', 'Chocolate', 'Chiclete', 'Visita', 'Acidente', 
         'PRODUZ', 'USA', 'BilheteDourado'
