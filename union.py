@@ -1,7 +1,7 @@
 #Consulta que devolve todos os CPFs do schema
 import sqlite3
 
-conn = sqlite3.connect("fabrica_de_chocolate.db")
+conn = sqlite3.connect("fabrica_chocolate.db")
 cursor = conn.cursor()
 
 cursor.execute(
@@ -15,5 +15,9 @@ cursor.execute(
 """
 )
 
-conn.commit()
+resultado = cursor.fetchall()
+
+for linha in resultado:
+    print(linha)
+
 conn.close()
