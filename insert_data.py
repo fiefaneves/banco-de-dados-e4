@@ -128,7 +128,10 @@ def inserir_dados_exemplo():
         produtos = [
             ('PROD001', 'Chocolate ao Leite Premium', 15.50, '2025-12-31', 'Chocolate cremoso ao leite'),
             ('PROD002', 'Chocolate com Avelã', 18.75, '2025-11-30', 'Chocolate com pedaços de avelã'),
-            ('PROD003', 'Chiclete Explosivo', 5.25, '2026-06-15', 'Chiclete que explode sabores')
+            ('PROD003', 'Chiclete Explosivo', 5.25, '2026-06-15', 'Chiclete que explode sabores'),
+            ('PROD004', 'Chocolate Branco Premium', 15.50, '2025-10-31', 'Chocolate branco cremoso'),
+            ('PROD005', 'Chocolate Meio Amargo', 12.25, '2025-09-30', 'Chocolate com 70% cacau'),
+            ('PROD006', 'Trufa Especial', 8.75, '2025-08-31', 'Trufa recheada')
         ]
         
         cursor.executemany("""
@@ -197,6 +200,8 @@ def inserir_dados_exemplo():
             ('PROD002', 'ING002', 50.0),   # Açúcar no chocolate com avelã
             ('PROD002', 'ING003', 25.0),   # Leite no chocolate com avelã
             ('PROD002', 'ING004', 30.0)    # Avelã no chocolate com avelã
+            ('PROD002', 'ING004', 25.0),   # Chocolate com Avelã 
+            ('PROD006', 'ING004', 25.0)    # Trufa Especial 
         ]
         
         cursor.executemany("""
