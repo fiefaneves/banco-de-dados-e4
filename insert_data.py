@@ -22,13 +22,13 @@ def inserir_dados_exemplo():
         # Inserir Responsáveis
         print("Inserindo Responsáveis...")
         responsaveis = [
-            ('12345678901', 'Rua das Flores, 123', 'Apto 45', '12345678', 'Centro', 'São Paulo'),
-            ('98765432109', 'Av. Principal, 456', '', '87654321', 'Jardins', 'Rio de Janeiro')
+            ('12345678901', 'João Silva', 'Rua das Flores, 123', 'Apto 45', '12345678', 'Centro', 'São Paulo'),
+            ('98765432109', 'Maria Santos', 'Av. Principal, 456', '', '87654321', 'Jardins', 'Rio de Janeiro')
         ]
         
         cursor.executemany("""
-            INSERT INTO Responsavel (CPF, End_rua, End_complemento, End_cep, End_bairro, End_estado) 
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO Responsavel (CPF, Nome, End_rua, End_complemento, End_cep, End_bairro, End_estado) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """, responsaveis)
         
         # Inserir Contatos
@@ -68,7 +68,10 @@ def inserir_dados_exemplo():
         funcionarios = [
             ('44444444444', 5000.00, 'Willy Wonka', None),  # Chefe supremo
             ('55555555555', 3000.00, 'Mike Teavee', '44444444444'),
-            ('66666666666', 2500.00, 'Augustus Gloop', '44444444444')
+            ('66666666666', 2500.00, 'Augustus Gloop', '44444444444'),
+            ('77777777777', 2800.00, 'Grandpa Joe', '44444444444'),
+            ('88888888888', 2200.00, 'Charlie Worker', '44444444444'),
+            ('99999999999', 2600.00, 'Slugworth Spy', '44444444444')
         ]
         
         cursor.executemany("""
@@ -80,7 +83,10 @@ def inserir_dados_exemplo():
         print("Inserindo OompaLoompas...")
         oompas = [
             ('55555555555', 'Tribo do Cacau'),
-            ('66666666666', 'Tribo do Açúcar')
+            ('66666666666', 'Tribo do Açúcar'),
+            ('77777777777', 'Tribo do Cacau'),
+            ('88888888888', 'Tribo do Açúcar'),
+            ('99999999999', 'Tribo do Chocolate')
         ]
         
         cursor.executemany("""
@@ -143,7 +149,10 @@ def inserir_dados_exemplo():
         print("Inserindo Chocolates...")
         chocolates = [
             ('PROD001', 'Ao Leite', 'Sem recheio', '11111111111'),
-            ('PROD002', 'Ao Leite', 'Avelã', '22222222222')
+            ('PROD002', 'Ao Leite', 'Avelã', '22222222222'),
+            ('PROD004', 'Amargo', 'Sem recheio', '33333333333'),
+            ('PROD005', 'Branco', 'Sem recheio', '11111111111'),
+            ('PROD006', 'Ao Leite', 'Licor', '22222222222')
         ]
         
         cursor.executemany("""
@@ -182,7 +191,12 @@ def inserir_dados_exemplo():
         print("Inserindo Produção...")
         producao = [
             ('PROD001', '55555555555', 'MAQ001'),
-            ('PROD002', '66666666666', 'MAQ001')
+            ('PROD002', '66666666666', 'MAQ001'),
+            ('PROD004', '77777777777', 'MAQ001'),
+            ('PROD005', '88888888888', 'MAQ001'),
+            ('PROD006', '99999999999', 'MAQ001'),
+            ('PROD001', '77777777777', 'MAQ001'),  # Mesmo produto produzido por dois OompaLoompas
+            ('PROD002', '55555555555', 'MAQ001')   # Mesmo produto produzido por dois OompaLoompas
         ]
         
         cursor.executemany("""
@@ -199,9 +213,16 @@ def inserir_dados_exemplo():
             ('PROD002', 'ING001', 100.0),  # Cacau no chocolate com avelã
             ('PROD002', 'ING002', 50.0),   # Açúcar no chocolate com avelã
             ('PROD002', 'ING003', 25.0),   # Leite no chocolate com avelã
-            ('PROD002', 'ING004', 30.0)    # Avelã no chocolate com avelã
             ('PROD002', 'ING004', 25.0),   # Chocolate com Avelã 
             ('PROD006', 'ING004', 25.0)    # Trufa Especial 
+            ('PROD002', 'ING004', 30.0),   # Avelã no chocolate com avelã
+            ('PROD004', 'ING001', 150.0),  # Cacau no chocolate amargo (mais cacau)
+            ('PROD004', 'ING002', 25.0),   # Açúcar no chocolate amargo (menos açúcar)
+            ('PROD005', 'ING002', 75.0),   # Açúcar no chocolate branco
+            ('PROD005', 'ING003', 50.0),   # Leite no chocolate branco
+            ('PROD006', 'ING001', 80.0),   # Cacau na trufa
+            ('PROD006', 'ING002', 40.0),   # Açúcar na trufa
+            ('PROD006', 'ING003', 30.0)    # Leite na trufa
         ]
         
         cursor.executemany("""
