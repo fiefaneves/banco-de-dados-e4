@@ -18,8 +18,17 @@ cursor.execute(
 
 resultado = cursor.fetchall()
 
-for linha in resultado:
-    print(linha)
+print("=" * 50)
+print("    CHOCOLATES SEM BILHETE DOURADO")
+print("=" * 50)
 
+if resultado:
+    for i, linha in enumerate(resultado, 1):
+        print(f"{i:2d}. Produto ID: {linha[0]}")
+    print(f"\nTotal: {len(resultado)} chocolates sem bilhete dourado")
+else:
+    print("Todos os chocolates possuem bilhete dourado!")
+
+print("=" * 50)
 
 conn.close()

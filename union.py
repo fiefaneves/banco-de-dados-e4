@@ -17,7 +17,17 @@ cursor.execute(
 
 resultado = cursor.fetchall()
 
-for linha in resultado:
-    print(linha)
+print("=" * 40)
+print("     TODOS OS CPFs DO SISTEMA")
+print("=" * 40)
+
+if resultado:
+    for i, linha in enumerate(resultado, 1):
+        print(f"{i:2d}. {linha[0]}")
+    print(f"\nTotal: {len(resultado)} CPFs encontrados")
+else:
+    print("Nenhum CPF encontrado no sistema.")
+
+print("=" * 40)
 
 conn.close()
