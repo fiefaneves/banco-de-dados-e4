@@ -5,11 +5,11 @@ cursor = conn.cursor()
 #Semi-Join: Crianças que Sofreram Acidente
 sql_semi_join = """
     SELECT c.nome
-    FROM Crianca c
+    FROM Criança c
     WHERE EXISTS (SELECT 1 
         FROM Visita v
-        JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
-        WHERE v.CPF_Crianca = c.CPF
+        JOIN Acidente a ON v.CPF_Criança = a.CPF_Criança_Visita
+        WHERE v.CPF_Criança = c.CPF
     );
 """
 cursor.execute(sql_semi_join)

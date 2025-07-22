@@ -59,7 +59,7 @@ def consulta_left_join():
     """LEFT JOIN - Nomes das crianças que não compraram chocolates"""
     query = """
     SELECT CRI.nome as Nome_Crianca
-    FROM Crianca cri
+    FROM Criança cri
     LEFT JOIN Chocolate choco ON cri.CPF = choco.CPF_CRIANCA
     WHERE choco.CPF_CRIANCA IS NULL;
     """
@@ -95,8 +95,8 @@ def consulta_union():
     SELECT CPF, 'Responsavel' as Tipo
     FROM Responsavel 
     UNION
-    SELECT CPF, 'Crianca' as Tipo
-    FROM Crianca
+    SELECT CPF, 'Criança' as Tipo
+    FROM Criança
     UNION
     SELECT CPF, 'Funcionario' as Tipo
     FROM Funcionario
@@ -113,12 +113,12 @@ def consulta_semi_join():
     """SEMI-JOIN - Crianças que sofreram acidentes"""
     query = """
     SELECT c.nome as Nome_Crianca
-    FROM Crianca c
+    FROM Criança c
     WHERE EXISTS (
         SELECT 1 
         FROM Visita v
-        JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
-        WHERE v.CPF_Crianca = c.CPF
+        JOIN Acidente a ON v.CPF_Criança = a.CPF_Criança_Visita
+        WHERE v.CPF_Criança = c.CPF
     );
     """
     

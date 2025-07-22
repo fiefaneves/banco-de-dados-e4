@@ -45,7 +45,7 @@ CREATE TABLE Funcionario (
 -- 2. Entidades com dependências (FKs)
 -- =================================================================
 
-CREATE TABLE Crianca (
+CREATE TABLE Criança (
     CPF VARCHAR2(11) PRIMARY KEY,
     nome VARCHAR2(100),
     data_nascimento DATE,
@@ -97,7 +97,7 @@ CREATE TABLE Chocolate (
     RECHEIO VARCHAR2(50),
     CPF_CRIANCA VARCHAR2(11),
     CONSTRAINT FK_CHOCOLATE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
-    CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF)
+    CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
 );
 
 
@@ -112,11 +112,11 @@ CREATE TABLE Contatos (
 );
 
 CREATE TABLE Visita (
-    CPF_Crianca VARCHAR2(11),
+    CPF_Criança VARCHAR2(11),
     CNPJ_Fabrica VARCHAR2(14),
     data_visita DATE,
-    CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Crianca, CNPJ_Fabrica),
-    CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Crianca) REFERENCES Crianca(CPF),
+    CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Criança, CNPJ_Fabrica),
+    CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Criança) REFERENCES Criança(CPF),
     CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
 );
 
@@ -125,10 +125,10 @@ CREATE TABLE Acidente (
     data_acidente DATE,
     gravidade VARCHAR2(50),
     musica VARCHAR2(100),
-    CPF_Crianca_Visita VARCHAR2(11),
+    CPF_Criança_Visita VARCHAR2(11),
     CNPJ_Fabrica_Visita VARCHAR2(14),
-    CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Crianca_Visita, CNPJ_Fabrica_Visita) REFERENCES Visita(CPF_Crianca, CNPJ_Fabrica),
-    CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Crianca_Visita, CNPJ_Fabrica_Visita) -- Garante que uma visita tenha no máximo um acidente
+    CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Criança_Visita, CNPJ_Fabrica_Visita) REFERENCES Visita(CPF_Criança, CNPJ_Fabrica),
+    CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita) -- Garante que uma visita tenha no máximo um acidente
 );
 
 CREATE TABLE PRODUZ (
