@@ -92,7 +92,7 @@ def criar_tabelas():
                 End_estado TEXT
             )
         """)
-        print("✓ Tabela Responsavel criada")
+        print("Tabela Responsavel criada")
         
         # Fabrica
         cursor.execute("""
@@ -101,7 +101,7 @@ def criar_tabelas():
                 data_fundacao DATE
             )
         """)
-        print("✓ Tabela Fabrica criada")
+        print("Tabela Fabrica criada")
         
         # Ingrediente
         cursor.execute("""
@@ -111,7 +111,7 @@ def criar_tabelas():
                 QTD REAL
             )
         """)
-        print("✓ Tabela Ingrediente criada")
+        print("Tabela Ingrediente criada")
         
         # Produto
         cursor.execute("""
@@ -123,7 +123,7 @@ def criar_tabelas():
                 DESC_PRODUTO TEXT
             )
         """)
-        print("✓ Tabela Produto criada")
+        print("Tabela Produto criada")
         
         # Funcionario
         cursor.execute("""
@@ -135,7 +135,7 @@ def criar_tabelas():
                 CONSTRAINT FK_FUNC_SUPERVISOR FOREIGN KEY (CPF_CHEFE) REFERENCES Funcionario(CPF)
             )
         """)
-        print("✓ Tabela Funcionario criada")
+        print("Tabela Funcionario criada")
         
         # 2. Entidades com dependências (FKs)
         print("\n2. Criando entidades com dependências...")
@@ -150,7 +150,7 @@ def criar_tabelas():
                 CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
             )
         """)
-        print("✓ Tabela Criança criada")
+        print("Tabela Criança criada")
         
         # Setor
         cursor.execute("""
@@ -164,7 +164,7 @@ def criar_tabelas():
                 CONSTRAINT FK_SETOR_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
-        print("✓ Tabela Setor criada")
+        print("Tabela Setor criada")
         
         # Maquina
         cursor.execute("""
@@ -178,7 +178,7 @@ def criar_tabelas():
                     REFERENCES Setor(CNPJ_Fabrica, COD_Setor)
             )
         """)
-        print("✓ Tabela Maquina criada")
+        print("Tabela Maquina criada")
         
         # 3. Mapeamento da Hierarquia de Herança
         print("\n3. Criando hierarquia de herança...")
@@ -191,7 +191,7 @@ def criar_tabelas():
                 CONSTRAINT FK_OOMPA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
             )
         """)
-        print("✓ Tabela OompaLoompa criada")
+        print("Tabela OompaLoompa criada")
         
         # Pessoa
         cursor.execute("""
@@ -200,7 +200,7 @@ def criar_tabelas():
                 CONSTRAINT FK_PESSOA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
             )
         """)
-        print("✓ Tabela Pessoa criada")
+        print("Tabela Pessoa criada")
         
         # Chiclete
         cursor.execute("""
@@ -209,7 +209,7 @@ def criar_tabelas():
                 CONSTRAINT FK_CHICLETE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID)
             )
         """)
-        print("✓ Tabela Chiclete criada")
+        print("Tabela Chiclete criada")
         
         # Chocolate
         cursor.execute("""
@@ -222,7 +222,7 @@ def criar_tabelas():
                 CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
             )
         """)
-        print("✓ Tabela Chocolate criada")
+        print("Tabela Chocolate criada")
         
         # 4. Tabelas de Atributos Multivalorados e Relacionamentos
         print("\n4. Criando tabelas de relacionamentos...")
@@ -236,7 +236,7 @@ def criar_tabelas():
                 CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
             )
         """)
-        print("✓ Tabela Contatos criada")
+        print("Tabela Contatos criada")
         
         # Visita
         cursor.execute("""
@@ -249,7 +249,7 @@ def criar_tabelas():
                 CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
-        print("✓ Tabela Visita criada")
+        print("Tabela Visita criada")
         
         # Acidente
         cursor.execute("""
@@ -265,7 +265,7 @@ def criar_tabelas():
                 CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita)
             )
         """)
-        print("✓ Tabela Acidente criada")
+        print("Tabela Acidente criada")
         
         # PRODUZ
         cursor.execute("""
@@ -279,7 +279,7 @@ def criar_tabelas():
                 CONSTRAINT FK_PRODUZ_MAQ FOREIGN KEY (ID_MAQUINA) REFERENCES Maquina(ID)
             )
         """)
-        print("✓ Tabela PRODUZ criada")
+        print("Tabela PRODUZ criada")
         
         # USA
         cursor.execute("""
@@ -292,7 +292,7 @@ def criar_tabelas():
                 CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
             )
         """)
-        print("✓ Tabela USA criada")
+        print("Tabela USA criada")
         
         # BilheteDourado
         cursor.execute("""
@@ -305,18 +305,18 @@ def criar_tabelas():
                 CONSTRAINT FK_BILHETE_CHOCO FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID_PRODUTO)
             )
         """)
-        print("✓ Tabela BilheteDourado criada")
+        print("Tabela BilheteDourado criada")
         
         # Confirmar criação
         conn.commit()
         print("\n" + "="*60)
-        print("🎉 TODAS AS TABELAS FORAM CRIADAS COM SUCESSO!")
+        print("TODAS AS TABELAS FORAM CRIADAS COM SUCESSO!")
         print("="*60)
         
         return True
         
     except sqlite3.Error as e:
-        print(f"❌ Erro ao criar tabelas: {e}")
+        print(f"Erro ao criar tabelas: {e}")
         conn.rollback()
         return False
     
@@ -371,13 +371,9 @@ def main():
     if criar_tabelas():
         verificar_tabelas()
         
-        print(f"\n📁 Banco de dados criado: fabrica_chocolate.db")
-        print("\nPróximos passos:")
-        print("1. Execute 'inserir_dados_exemplo.py' para adicionar dados de teste")
-        print("2. Use 'consultar_fabrica.py' para fazer consultas avançadas")
-        print("3. Use 'consultas_simples.py' para consultas básicas")
+        print(f"\nBanco de dados criado: fabrica_chocolate.db")
     else:
-        print("❌ Falha na criação das tabelas.")
+        print("Falha na criação das tabelas.")
 
 if __name__ == "__main__":
     main()
