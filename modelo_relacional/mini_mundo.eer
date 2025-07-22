@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:eer="eer" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation">
   <eer:Schema xmi:id="_PNbnUEZFEfCy8KFOTv57nA">
-    <nodes xmi:type="eer:Entity" xmi:id="_sNyMkEZPEfCmq9CWuq4Zaw" name="CrianÃ§a" AttributeLinkSource="_2pFt0EZPEfCmq9CWuq4Zaw _-OsNQEZPEfCmq9CWuq4Zaw __2hGsEZPEfCmq9CWuq4Zaw" relationshipLink="_SNJ_cEZTEfCmq9CWuq4Zaw _11-aoFRMEfC-RY9vfvqGqQ _QrKUYFRNEfC-RY9vfvqGqQ"/>
+    <nodes xmi:type="eer:Entity" xmi:id="_sNyMkEZPEfCmq9CWuq4Zaw" name="CrianÃƒÂ§a" AttributeLinkSource="_2pFt0EZPEfCmq9CWuq4Zaw _-OsNQEZPEfCmq9CWuq4Zaw __2hGsEZPEfCmq9CWuq4Zaw" relationshipLink="_SNJ_cEZTEfCmq9CWuq4Zaw _11-aoFRMEfC-RY9vfvqGqQ _QrKUYFRNEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_2o5gkEZPEfCmq9CWuq4Zaw" name="nome" AttributeLinkTarget="_2pFt0EZPEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_8sy8sEZPEfCmq9CWuq4Zaw" name="contatos" type="MULTIVALUED" AttributeLinkTarget="_8s2AAEZPEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_-OmtsEZPEfCmq9CWuq4Zaw" name="data_nascimento" dataType="TIMESTAMP" AttributeLinkTarget="_-OsNQEZPEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="__2eqcEZPEfCmq9CWuq4Zaw" name="cpf" type="IDENTIFIER" AttributeLinkTarget="__2hGsEZPEfCmq9CWuq4Zaw"/>
-    <nodes xmi:type="eer:Attribute" xmi:id="_DCAyUEZQEfCmq9CWuq4Zaw" name="endereÃ§o" AttributeLinkSource="_D91hYEZQEfCmq9CWuq4Zaw _FRxOcEZQEfCmq9CWuq4Zaw _IQ7uQEZQEfCmq9CWuq4Zaw _LRvz4EZQEfCmq9CWuq4Zaw" AttributeLinkTarget="_DCD1oEZQEfCmq9CWuq4Zaw"/>
+    <nodes xmi:type="eer:Attribute" xmi:id="_DCAyUEZQEfCmq9CWuq4Zaw" name="endereÃƒÂ§o" AttributeLinkSource="_D91hYEZQEfCmq9CWuq4Zaw _FRxOcEZQEfCmq9CWuq4Zaw _IQ7uQEZQEfCmq9CWuq4Zaw _LRvz4EZQEfCmq9CWuq4Zaw" AttributeLinkTarget="_DCD1oEZQEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_D9yeEEZQEfCmq9CWuq4Zaw" name="cep" AttributeLinkTarget="_D91hYEZQEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_FRuyMEZQEfCmq9CWuq4Zaw" name="rua" AttributeLinkTarget="_FRxOcEZQEfCmq9CWuq4Zaw"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_IQ4D4EZQEfCmq9CWuq4Zaw" name="estado" AttributeLinkTarget="_IQ7uQEZQEfCmq9CWuq4Zaw"/>
@@ -60,7 +60,7 @@
     <nodes xmi:type="eer:Attribute" xmi:id="_FKuMgFRMEfC-RY9vfvqGqQ" name="id" type="IDENTIFIER" AttributeLinkTarget="_FKyd8FRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_H9kHkFRMEfC-RY9vfvqGqQ" name="data_acidente" dataType="TIMESTAMP" AttributeLinkTarget="_H9oZAFRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_MNV6sFRMEfC-RY9vfvqGqQ" name="gravidade" AttributeLinkTarget="_MNazMFRMEfC-RY9vfvqGqQ"/>
-    <nodes xmi:type="eer:Entity" xmi:id="_oEYTB1RMEfC-RY9vfvqGqQ" name="ResponsÃ¡vel" AttributeLinkSource="_8s2AAEZPEfCmq9CWuq4Zaw _DCD1oEZQEfCmq9CWuq4Zaw _FBKLYFRNEfC-RY9vfvqGqQ _jd9FAFRNEfC-RY9vfvqGqQ _CnTcgGS-EfC5NOgwujDKzg" relationshipLink="_1LjkoFRMEfC-RY9vfvqGqQ"/>
+    <nodes xmi:type="eer:Entity" xmi:id="_oEYTB1RMEfC-RY9vfvqGqQ" name="ResponsÃƒÂ¡vel" AttributeLinkSource="_8s2AAEZPEfCmq9CWuq4Zaw _DCD1oEZQEfCmq9CWuq4Zaw _FBKLYFRNEfC-RY9vfvqGqQ _jd9FAFRNEfC-RY9vfvqGqQ _CnTcgGS-EfC5NOgwujDKzg" relationshipLink="_1LjkoFRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Relationship" xmi:id="_zjQKEFRMEfC-RY9vfvqGqQ" name="Acompanha" relationshipLink="_1LjkoFRMEfC-RY9vfvqGqQ _11-aoFRMEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:Attribute" xmi:id="_CGo7AFRNEfC-RY9vfvqGqQ" name="cpf" type="IDENTIFIER" AttributeLinkTarget="_FBKLYFRNEfC-RY9vfvqGqQ"/>
     <nodes xmi:type="eer:AssociativeEntity" xmi:id="_NgyqIFRNEfC-RY9vfvqGqQ" name="Visita" relationshipLink="_WTvtgFRNEfC-RY9vfvqGqQ">
