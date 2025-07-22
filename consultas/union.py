@@ -6,12 +6,15 @@ cursor = conn.cursor()
 
 cursor.execute(
 """
-    SELECT CPF
+    SELECT CPF, 'Responsavel' as Tipo
     FROM Responsavel 
-        UNION
-    SELECT CPF
-    FROM Criança 
-    ORDER BY CPF
+    UNION
+    SELECT CPF, 'Crianca' as Tipo
+    FROM Crianca
+    UNION
+    SELECT CPF, 'Funcionario' as Tipo
+    FROM Funcionario
+    ORDER BY CPF;
 """
 )
 
