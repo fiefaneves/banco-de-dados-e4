@@ -3,7 +3,7 @@ import sqlite3
 conn = sqlite3.connect('fabrica_chocolate.db')
 cursor = conn.cursor()
 
-# Executando a consulta - Nomes das crianças que não compraram chocolates
+# Nomes das crianças que não compraram chocolates
 cursor.execute('''
     SELECT CRI.nome
     FROM Criança cri

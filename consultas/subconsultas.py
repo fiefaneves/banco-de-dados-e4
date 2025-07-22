@@ -3,19 +3,22 @@ import sqlite3
 conn = sqlite3.connect('fabrica_chocolate.db')
 cursor = conn.cursor()
 
-# Subconsulta de linha: Produto mais caro
+# Subconsulta de linha: Produtos com o mesmo preço e data de validade do produto 'PROD001'
 cursor.execute('''
-    SELECT NOME, PRECO
+    SELECT NOME, PRECO, DATA_VAL
     FROM Produto
-    WHERE PRECO = (
-        SELECT MAX(PRECO)
+    WHERE (PRECO, DATA_VAL) = (
+        SELECT PRECO, DATA_VAL
         FROM Produto
+        WHERE ID = 'PROD001'
     )
+    AND ID != 'PROD001'
 ''')
-for nome, preco in cursor.fetchall():
+for nome, preco, data_val in cursor.fetchall():
     print(f"Produto: {nome}")
     print(f"Preço: R$ {preco:.2f}")
-    print("-" * 30)
+    print(f"Data de Validade: {data_val}")
+print("-" * 30)
 
 # Subconsulta de tabela: Produtos que usam o ingrediente 'Avelã'
 cursor.execute('''
@@ -31,6 +34,6 @@ cursor.execute('''
 ''')
 for (nome,) in cursor.fetchall():
     print(f"Produto: {nome}")
-    print("-" * 30)
+print("-" * 30)
 
 conn.close()
