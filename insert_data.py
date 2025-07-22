@@ -137,7 +137,8 @@ def inserir_dados():
             ('PROD003', 'Chiclete Explosivo', 5.25, '2026-06-15', 'Chiclete que explode sabores'),
             ('PROD004', 'Chocolate Branco Premium', 15.50, '2025-12-31', 'Chocolate branco cremoso'),
             ('PROD005', 'Chocolate Meio Amargo', 12.25, '2025-09-30', 'Chocolate com 70% cacau'),
-            ('PROD006', 'Trufa Especial', 8.75, '2025-08-31', 'Trufa recheada')
+            ('PROD006', 'Trufa Especial', 8.75, '2025-08-31', 'Trufa recheada'),
+            ('PROD007', 'Chocolate Ao Leite', 10.30, '2025-10-22', 'Morango')
         ]
         
         cursor.executemany("""
