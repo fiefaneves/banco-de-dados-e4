@@ -10,8 +10,8 @@ def conectar_db():
         print(f"Erro ao conectar ao banco: {e}")
         return None
 
-def inserir_dados_exemplo():
-    """Insere dados de exemplo nas tabelas"""
+def inserir_dados():
+    """Insere dados nas tabelas"""
     conn = conectar_db()
     if not conn:
         return
@@ -135,7 +135,7 @@ def inserir_dados_exemplo():
             ('PROD001', 'Chocolate ao Leite Premium', 15.50, '2025-12-31', 'Chocolate cremoso ao leite'),
             ('PROD002', 'Chocolate com Avelã', 18.75, '2025-11-30', 'Chocolate com pedaços de avelã'),
             ('PROD003', 'Chiclete Explosivo', 5.25, '2026-06-15', 'Chiclete que explode sabores'),
-            ('PROD004', 'Chocolate Branco Premium', 15.50, '2025-10-31', 'Chocolate branco cremoso'),
+            ('PROD004', 'Chocolate Branco Premium', 15.50, '2025-12-31', 'Chocolate branco cremoso'),
             ('PROD005', 'Chocolate Meio Amargo', 12.25, '2025-09-30', 'Chocolate com 70% cacau'),
             ('PROD006', 'Trufa Especial', 8.75, '2025-08-31', 'Trufa recheada')
         ]
@@ -150,9 +150,9 @@ def inserir_dados_exemplo():
         chocolates = [
             ('PROD001', 'Ao Leite', 'Sem recheio', '11111111111'),
             ('PROD002', 'Ao Leite', 'Avelã', '22222222222'),
-            ('PROD004', 'Amargo', 'Sem recheio', '33333333333'),
             ('PROD005', 'Branco', 'Sem recheio', '11111111111'),
-            ('PROD006', 'Ao Leite', 'Licor', '22222222222')
+            ('PROD006', 'Ao Leite', 'Licor', '22222222222'),
+            ('PROD007', 'Ao Leite', 'Morango', None)
         ]
         
         cursor.executemany("""
@@ -214,17 +214,18 @@ def inserir_dados_exemplo():
             ('PROD002', 'ING002', 50.0),   # Açúcar no chocolate com avelã
             ('PROD002', 'ING003', 25.0),   # Leite no chocolate com avelã
             ('PROD002', 'ING004', 25.0),   # Chocolate com Avelã 
-            ('PROD006', 'ING004', 25.0)    # Trufa Especial 
-            ('PROD002', 'ING004', 30.0),   # Avelã no chocolate com avelã
             ('PROD004', 'ING001', 150.0),  # Cacau no chocolate amargo (mais cacau)
             ('PROD004', 'ING002', 25.0),   # Açúcar no chocolate amargo (menos açúcar)
             ('PROD005', 'ING002', 75.0),   # Açúcar no chocolate branco
             ('PROD005', 'ING003', 50.0),   # Leite no chocolate branco
             ('PROD006', 'ING001', 80.0),   # Cacau na trufa
             ('PROD006', 'ING002', 40.0),   # Açúcar na trufa
-            ('PROD006', 'ING003', 30.0)    # Leite na trufa
+            ('PROD006', 'ING003', 30.0),   # Leite na trufa
+            ('PROD006', 'ING004', 25.0),   # Trufa Especial
+            ('PROD003', 'ING002', 10.0),   # Açúcar no chiclete
+            ('PROD003', 'ING003', 5.0)     # Leite no chiclete
         ]
-        
+
         cursor.executemany("""
             INSERT INTO USA (ID_PRODUTO, COD_INGREDIENTE, quantidade) 
             VALUES (?, ?, ?)
@@ -239,11 +240,11 @@ def inserir_dados_exemplo():
         
         # Confirmar todas as inserções
         conn.commit()
-        print("\n✅ Todos os dados de exemplo foram inseridos com sucesso!")
+        print("\nTodos os dados foram inseridos com sucesso!")
         
     except sqlite3.Error as e:
         conn.rollback()
-        print(f"❌ Erro ao inserir dados: {e}")
+        print(f"Erro ao inserir dados: {e}")
     
     finally:
         conn.close()
@@ -277,12 +278,8 @@ def verificar_dados():
     conn.close()
 
 if __name__ == "__main__":
-    print("INSERÇÃO DE DADOS DE EXEMPLO - FÁBRICA DE CHOCOLATE")
+    print("INSERÇÃO DE DADOS - FÁBRICA DE CHOCOLATE")
     print("=" * 60)
     
-    inserir_dados_exemplo()
+    inserir_dados()
     verificar_dados()
-    
-    print("\nAgora você pode usar os scripts de consulta:")
-    print("- consultar_fabrica.py (consultas avançadas)")
-    print("- consultas_simples.py (consultas básicas)")
