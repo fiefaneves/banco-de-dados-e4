@@ -32,7 +32,7 @@ def drop_tables_if_exist():
         'OompaLoompa',
         'Maquina',
         'Setor',
-        'Criança',
+        'Crianca',
         'Funcionario',
         'Produto',
         'Ingrediente',
@@ -142,7 +142,7 @@ def criar_tabelas():
         
         # Criança
         cursor.execute("""
-            CREATE TABLE Criança (
+            CREATE TABLE Crianca (
                 CPF TEXT PRIMARY KEY,
                 nome TEXT,
                 data_nascimento DATE,
@@ -150,7 +150,7 @@ def criar_tabelas():
                 CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
             )
         """)
-        print("Tabela Criança criada")
+        print("Tabela Crianca criada")
         
         # Setor
         cursor.execute("""
@@ -219,7 +219,7 @@ def criar_tabelas():
                 RECHEIO TEXT,
                 CPF_CRIANCA TEXT,
                 CONSTRAINT FK_CHOCOLATE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
-                CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
+                CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF)
             )
         """)
         print("Tabela Chocolate criada")
@@ -241,11 +241,11 @@ def criar_tabelas():
         # Visita
         cursor.execute("""
             CREATE TABLE Visita (
-                CPF_Criança TEXT,
+                CPF_Crianca TEXT,
                 CNPJ_Fabrica TEXT,
                 data_visita DATE,
-                CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Criança, CNPJ_Fabrica),
-                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Criança) REFERENCES Criança(CPF),
+                CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Crianca, CNPJ_Fabrica),
+                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Crianca) REFERENCES Crianca(CPF),
                 CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
@@ -258,11 +258,11 @@ def criar_tabelas():
                 data_acidente DATE,
                 gravidade TEXT,
                 musica TEXT,
-                CPF_Criança_Visita TEXT,
+                CPF_Crianca_Visita TEXT,
                 CNPJ_Fabrica_Visita TEXT,
-                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Criança_Visita, CNPJ_Fabrica_Visita) 
-                    REFERENCES Visita(CPF_Criança, CNPJ_Fabrica),
-                CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita)
+                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Crianca_Visita, CNPJ_Fabrica_Visita) 
+                    REFERENCES Visita(CPF_Crianca, CNPJ_Fabrica),
+                CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Crianca_Visita, CNPJ_Fabrica_Visita)
             )
         """)
         print("Tabela Acidente criada")
