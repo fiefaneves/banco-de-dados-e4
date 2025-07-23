@@ -260,7 +260,7 @@ def verificar_banco():
 def menu_principal():
     """Menu principal da aplicação"""
     print("CONSULTAS - FÁBRICA DE CHOCOLATE")
-    print("=" * 80)
+    print("=" * 50)
     
     if not verificar_banco():
         return
@@ -295,7 +295,7 @@ def menu_principal():
         escolha = input(f"\n{'='*50}\nEscolha uma opção: ").strip()
         
         if escolha == '0':
-            print("\n🍫 Obrigado por usar o sistema da Fábrica de Chocolate! 🍫")
+            print("\n Obrigado por usar o sistema da Fábrica de Chocolate! ")
             break
             
         elif escolha == '10':
