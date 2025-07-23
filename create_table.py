@@ -11,7 +11,7 @@ def conectar_db():
         return None
 
 def drop_tables_if_exist():
-    """Remove todas as tabelas se existirem (para recriação limpa)"""
+    """Remove todas as tabelas se existirem """
     conn = conectar_db()
     if not conn:
         return False
@@ -46,7 +46,6 @@ def drop_tables_if_exist():
         
         for tabela in tabelas:
             cursor.execute(f"DROP TABLE IF EXISTS {tabela}")
-            print(f"Tabela {tabela} removida (se existia)")
         
         # Reabilitar foreign keys
         cursor.execute("PRAGMA foreign_keys = ON")
@@ -74,12 +73,7 @@ def criar_tabelas():
         # Habilitar foreign keys
         cursor.execute("PRAGMA foreign_keys = ON")
         
-        print("Criando tabelas...")
-        print("-" * 50)
-        
-        # 1. Entidades que não dependem de outras
-        print("1. Criando entidades independentes...")
-        
+        # 1. Entidades que não dependem de outras        
         # Responsavel
         cursor.execute("""
             CREATE TABLE Responsavel (
@@ -92,7 +86,6 @@ def criar_tabelas():
                 End_estado TEXT
             )
         """)
-        print("Tabela Responsavel criada")
         
         # Fabrica
         cursor.execute("""
@@ -101,7 +94,6 @@ def criar_tabelas():
                 data_fundacao DATE
             )
         """)
-        print("Tabela Fabrica criada")
         
         # Ingrediente
         cursor.execute("""
@@ -111,7 +103,6 @@ def criar_tabelas():
                 QTD REAL
             )
         """)
-        print("Tabela Ingrediente criada")
         
         # Produto
         cursor.execute("""
@@ -123,7 +114,6 @@ def criar_tabelas():
                 DESC_PRODUTO TEXT
             )
         """)
-        print("Tabela Produto criada")
         
         # Funcionario
         cursor.execute("""
@@ -135,11 +125,8 @@ def criar_tabelas():
                 CONSTRAINT FK_FUNC_SUPERVISOR FOREIGN KEY (CPF_CHEFE) REFERENCES Funcionario(CPF)
             )
         """)
-        print("Tabela Funcionario criada")
         
         # 2. Entidades com dependências (FKs)
-        print("\n2. Criando entidades com dependências...")
-        
         # Criança
         cursor.execute("""
             CREATE TABLE Criança (
@@ -150,7 +137,6 @@ def criar_tabelas():
                 CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
             )
         """)
-        print("Tabela Criança criada")
         
         # Setor
         cursor.execute("""
@@ -164,7 +150,6 @@ def criar_tabelas():
                 CONSTRAINT FK_SETOR_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
-        print("Tabela Setor criada")
         
         # Maquina
         cursor.execute("""
@@ -178,10 +163,8 @@ def criar_tabelas():
                     REFERENCES Setor(CNPJ_Fabrica, COD_Setor)
             )
         """)
-        print("Tabela Maquina criada")
         
         # 3. Mapeamento da Hierarquia de Herança
-        print("\n3. Criando hierarquia de herança...")
         
         # OompaLoompa
         cursor.execute("""
@@ -191,7 +174,6 @@ def criar_tabelas():
                 CONSTRAINT FK_OOMPA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
             )
         """)
-        print("Tabela OompaLoompa criada")
         
         # Pessoa
         cursor.execute("""
@@ -200,7 +182,6 @@ def criar_tabelas():
                 CONSTRAINT FK_PESSOA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
             )
         """)
-        print("Tabela Pessoa criada")
         
         # Chiclete
         cursor.execute("""
@@ -209,7 +190,6 @@ def criar_tabelas():
                 CONSTRAINT FK_CHICLETE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID)
             )
         """)
-        print("Tabela Chiclete criada")
         
         # Chocolate
         cursor.execute("""
@@ -222,11 +202,8 @@ def criar_tabelas():
                 CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
             )
         """)
-        print("Tabela Chocolate criada")
         
         # 4. Tabelas de Atributos Multivalorados e Relacionamentos
-        print("\n4. Criando tabelas de relacionamentos...")
-        
         # Contatos
         cursor.execute("""
             CREATE TABLE ContatosResponsavel (
@@ -236,7 +213,6 @@ def criar_tabelas():
                 CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
             )
         """)
-        print("Tabela Contatos criada")
         
         # Visita
         cursor.execute("""
@@ -249,7 +225,6 @@ def criar_tabelas():
                 CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
-        print("Tabela Visita criada")
         
         # Acidente
         cursor.execute("""
@@ -265,7 +240,6 @@ def criar_tabelas():
                 CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita)
             )
         """)
-        print("Tabela Acidente criada")
         
         # PRODUZ
         cursor.execute("""
@@ -279,7 +253,6 @@ def criar_tabelas():
                 CONSTRAINT FK_PRODUZ_MAQ FOREIGN KEY (ID_MAQUINA) REFERENCES Maquina(ID)
             )
         """)
-        print("Tabela PRODUZ criada")
         
         # USA
         cursor.execute("""
@@ -292,7 +265,6 @@ def criar_tabelas():
                 CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
             )
         """)
-        print("Tabela USA criada")
         
         # BilheteDourado
         cursor.execute("""
@@ -305,11 +277,10 @@ def criar_tabelas():
                 CONSTRAINT FK_BILHETE_CHOCO FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID_PRODUTO)
             )
         """)
-        print("Tabela BilheteDourado criada")
         
         # Confirmar criação
         conn.commit()
-        print("\n" + "="*60)
+        print("="*60)
         print("TODAS AS TABELAS FORAM CRIADAS COM SUCESSO!")
         print("="*60)
         
@@ -359,7 +330,7 @@ def main():
         resposta = input("Banco de dados já existe. Deseja recriar? (s/n): ").strip().lower()
         if resposta == 's':
             if drop_tables_if_exist():
-                print("Tabelas removidas. Criando novas tabelas...\n")
+                print("Recriando tabelas...\n")
             else:
                 print("Erro ao remover tabelas existentes.")
                 return

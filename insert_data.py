@@ -20,7 +20,6 @@ def inserir_dados():
     
     try:
         # Inserir Responsáveis
-        print("Inserindo Responsáveis...")
         responsaveis = [
             ('12345678901', 'João Silva', 'Rua das Flores, 123', 'Apto 45', '12345678', 'Centro', 'São Paulo'),
             ('98765432109', 'Maria Santos', 'Av. Principal, 456', '', '87654321', 'Jardins', 'Rio de Janeiro')
@@ -32,7 +31,6 @@ def inserir_dados():
         """, responsaveis)
         
         # Inserir Contatos
-        print("Inserindo Contatos...")
         contatos = [
             ('12345678901', '(11) 99999-9999'),
             ('98765432109', '(21) 88888-8888')
@@ -44,14 +42,12 @@ def inserir_dados():
         """, contatos)
         
         # Inserir Fábrica
-        print("Inserindo Fábrica...")
         cursor.execute("""
             INSERT INTO Fabrica (CNPJ, data_fundacao) 
             VALUES ('12345678000199', '1971-01-15')
         """)
         
         # Inserir Crianças
-        print("Inserindo Crianças...")
         criancas = [
             ('11111111111', 'Charlie Bucket', '2010-05-15', '12345678901'),
             ('22222222222', 'Veruca Salt', '2009-08-20', '98765432109'),
@@ -64,7 +60,6 @@ def inserir_dados():
         """, criancas)
         
         # Inserir Funcionários
-        print("Inserindo Funcionários...")
         funcionarios = [
             ('44444444444', 5000.00, 'Willy Wonka', None),  # Chefe supremo
             ('55555555555', 3000.00, 'Mike Teavee', '44444444444'),
@@ -80,7 +75,6 @@ def inserir_dados():
         """, funcionarios)
         
         # Inserir OompaLoompas
-        print("Inserindo OompaLoompas...")
         oompas = [
             ('55555555555', 'Tribo do Cacau'),
             ('66666666666', 'Tribo do Açúcar'),
@@ -95,28 +89,24 @@ def inserir_dados():
         """, oompas)
         
         # Inserir Pessoa (Willy Wonka é uma pessoa)
-        print("Inserindo Pessoa...")
         cursor.execute("""
             INSERT INTO Pessoa (CPF_FUNC) 
             VALUES ('44444444444')
         """)
         
         # Inserir Setor
-        print("Inserindo Setor...")
         cursor.execute("""
             INSERT INTO Setor (CNPJ_Fabrica, COD_Setor, finalidade, data_criacao) 
             VALUES ('12345678000199', 'Produção', 'Fabricação de chocolates e doces', '1971-02-01')
         """)
         
         # Inserir Máquina
-        print("Inserindo Máquina...")
         cursor.execute("""
             INSERT INTO Maquina (ID, MODELO, DATA_INST, CNPJ_Fabrica_Setor, COD_Setor) 
             VALUES ('MAQ001', 'ChocolateMaker 3000', '1975-06-15', '12345678000199', 'Produção')
         """)
         
         # Inserir Ingredientes
-        print("Inserindo Ingredientes...")
         ingredientes = [
             ('ING001', 'Cacau', 1000.50),
             ('ING002', 'Açúcar', 500.25),
@@ -130,7 +120,6 @@ def inserir_dados():
         """, ingredientes)
         
         # Inserir Produtos
-        print("Inserindo Produtos...")
         produtos = [
             ('PROD001', 'Chocolate ao Leite Premium', 15.50, '2025-12-31', 'Chocolate cremoso ao leite'),
             ('PROD002', 'Chocolate com Avelã', 18.75, '2025-11-30', 'Chocolate com pedaços de avelã'),
@@ -147,7 +136,6 @@ def inserir_dados():
         """, produtos)
         
         # Inserir Chocolates
-        print("Inserindo Chocolates...")
         chocolates = [
             ('PROD001', 'Ao Leite', 'Sem recheio', '11111111111'),
             ('PROD002', 'Ao Leite', 'Avelã', '22222222222'),
@@ -162,14 +150,12 @@ def inserir_dados():
         """, chocolates)
         
         # Inserir Chiclete
-        print("Inserindo Chiclete...")
         cursor.execute("""
             INSERT INTO Chiclete (ID_PRODUTO) 
             VALUES ('PROD003')
         """)
         
         # Inserir Visitas
-        print("Inserindo Visitas...")
         visitas = [
             ('11111111111', '12345678000199', '2024-07-01'),
             ('22222222222', '12345678000199', '2024-07-01'),
@@ -182,14 +168,12 @@ def inserir_dados():
         """, visitas)
         
         # Inserir Acidente (só para Veruca Salt)
-        print("Inserindo Acidente...")
         cursor.execute("""
             INSERT INTO Acidente (ID, data_acidente, gravidade, musica, CPF_Criança_Visita, CNPJ_Fabrica_Visita) 
             VALUES ('ACD001', '2024-07-01', 'Leve', 'Oompa Loompa Song', '22222222222', '12345678000199')
         """)
         
         # Inserir Produção
-        print("Inserindo Produção...")
         producao = [
             ('PROD001', '55555555555', 'MAQ001'),
             ('PROD002', '66666666666', 'MAQ001'),
@@ -206,7 +190,6 @@ def inserir_dados():
         """, producao)
         
         # Inserir Uso de Ingredientes
-        print("Inserindo Uso de Ingredientes...")
         usos = [
             ('PROD001', 'ING001', 100.0),  # Cacau no chocolate ao leite
             ('PROD001', 'ING002', 50.0),   # Açúcar no chocolate ao leite
@@ -233,7 +216,6 @@ def inserir_dados():
         """, usos)
         
         # Inserir Bilhete Dourado
-        print("Inserindo Bilhete Dourado...")
         cursor.execute("""
             INSERT INTO BilheteDourado (COD, CATEGORIA, DATA_ENCONTRADO, LOCAL_COMPRA, ID_CHOCOLATE) 
             VALUES ('BD001', 'Especial', '2024-06-15', 'Loja do Sr. Bucket', 'PROD001')
