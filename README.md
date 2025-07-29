@@ -35,7 +35,7 @@ Sistema de banco de dados inspirado em **"A Fantástica Fábrica de Chocolate"**
 
 ## 📊 Estrutura do Banco de Dados
 
-![Modelo Relacional](modelo_relacional/image.jpg)
+![Modelo Relacional](modelo_relacional/image.png)
 
 ### Entidades Principais
 
