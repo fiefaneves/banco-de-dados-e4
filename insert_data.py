@@ -126,8 +126,9 @@ def inserir_dados():
             ('CHOC001', 'Chocolate ao Leite Premium', 'Ao Leite', '2025-12-31', '11111111111'),
             ('CHOC002', 'Chocolate com Avelã', 'Ao Leite', '2025-11-30', '22222222222'),
             ('CHOC003', 'Chocolate Branco Premium', 'Branco', '2025-12-31', '11111111111'),
+            ('CHOC005', 'Trufa Especial ao Leite', 'Ao Leite', '2025-12-31', None),
             ('CHOC004', 'Chocolate Meio Amargo', 'Meio Amargo', '2025-09-30', '22222222222'),
-            ('CHOC005', 'Trufa Especial', 'Ao Leite', '2025-08-31', None)
+            ('CHOC006', 'Chocolate ao Leite Clássico', 'Ao Leite', '2025-12-31', None)
         ]
         
         cursor.executemany("""

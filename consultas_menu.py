@@ -184,19 +184,18 @@ def consulta_subconsulta_escalar():
     )
 
 def consulta_subconsulta_linha():
-    """Subconsulta de Linha - Produtos com mesmo preço e data"""
+    """Subconsulta de Linha - Chocolates com mesma data de validade e tipo do CHOC001, exceto ele mesmo"""
     query = """
-    SELECT 
-        NOME as Nome_Produto, 
-        PRECO as Preco, 
-        DATA_VAL as Data_Validade
-    FROM Produto
-    WHERE (PRECO, DATA_VAL) = (
-        SELECT PRECO, DATA_VAL
-        FROM Produto
-        WHERE ID = 'PROD001'
-    )
-    AND ID != 'PROD001';
+        SELECT 
+            NOME, 
+            TIPO
+        FROM Chocolate
+        WHERE (Data_Validade, Tipo) = (
+            SELECT Data_Validade, Tipo
+            FROM Chocolate
+            WHERE ID = 'CHOC001'
+        )
+        AND ID != 'CHOC001'
     """
     
     executar_consulta(
@@ -273,7 +272,7 @@ def menu_principal():
         '5': ('ANTI-JOIN - Chocolates sem Bilhete Dourado', consulta_anti_join),
         '6': ('GROUP BY HAVING - Tribos Numerosas', consulta_group_by_having),
         '7': ('SUBCONSULTA ESCALAR - Ingredientes por Produto', consulta_subconsulta_escalar),
-        '8': ('SUBCONSULTA DE LINHA - Mesmo Preço e Validade', consulta_subconsulta_linha),
+        '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do Chocolate ao Leite Premium', consulta_subconsulta_linha),
         '9': ('SUBCONSULTA DE TABELA - Produtos com Avelã', consulta_subconsulta_tabela),
         '10': ('EXECUTAR TODAS AS CONSULTAS', None),
         '0': ('SAIR', None)
