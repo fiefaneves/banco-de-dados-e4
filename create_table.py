@@ -20,21 +20,18 @@ def drop_tables_if_exist():
     
     # Lista de tabelas na ordem inversa de criação (devido às FKs)
     tabelas = [
-        'BilheteDourado',
         'USA',
         'PRODUZ', 
         'Acidente',
         'Visita',
-        'ContatosResponsavel',
-        'Chiclete',
-        'Chocolate',
+        'Contatos',
         'Pessoa',
         'OompaLoompa',
         'Maquina',
         'Setor',
-        'Criança',
+        'Crianca',
         'Funcionario',
-        'Produto',
+        'Chocolate',
         'Ingrediente',
         'Fabrica',
         'Responsavel'
@@ -72,15 +69,14 @@ def criar_tabelas():
     try:
         # Habilitar foreign keys
         cursor.execute("PRAGMA foreign_keys = ON")
-        
-        # 1. Entidades que não dependem de outras        
+              
         # Responsavel
         cursor.execute("""
             CREATE TABLE Responsavel (
                 CPF TEXT PRIMARY KEY,
-                Nome TEXT,
+                Nome TEXT NOT NULL,
+                Data_Nascimento DATE,
                 End_rua TEXT,
-                End_complemento TEXT,
                 End_cep TEXT,
                 End_bairro TEXT,
                 End_estado TEXT
@@ -91,7 +87,7 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Fabrica (
                 CNPJ TEXT PRIMARY KEY,
-                data_fundacao DATE
+                Data_Fundacao DATE
             )
         """)
         
@@ -99,19 +95,20 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Ingrediente (
                 COD TEXT PRIMARY KEY,
-                NOME TEXT NOT NULL,
-                QTD REAL
+                Nome TEXT UNIQUE NOT NULL,
+                Marca TEXT
             )
         """)
         
-        # Produto
+        # Chocolate
         cursor.execute("""
-            CREATE TABLE Produto (
+            CREATE TABLE Chocolate (
                 ID TEXT PRIMARY KEY,
-                NOME TEXT NOT NULL,
-                PRECO REAL,
-                DATA_VAL DATE,
-                DESC_PRODUTO TEXT
+                Nome TEXT UNIQUE NOT NULL,
+                Tipo TEXT,
+                Data_Validade DATE,
+                CPF_CRIANCA TEXT,
+                CONSTRAINT FK_CHOC_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF)
             )
         """)
         
@@ -119,22 +116,21 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Funcionario (
                 CPF TEXT PRIMARY KEY,
-                SALARIO REAL,
-                NOME TEXT,
+                Nome TEXT NOT NULL,
+                Salario REAL,
                 CPF_CHEFE TEXT,
                 CONSTRAINT FK_FUNC_SUPERVISOR FOREIGN KEY (CPF_CHEFE) REFERENCES Funcionario(CPF)
             )
         """)
         
-        # 2. Entidades com dependências (FKs)
-        # Criança
+        # Crianca
         cursor.execute("""
-            CREATE TABLE Criança (
+            CREATE TABLE Crianca (
                 CPF TEXT PRIMARY KEY,
-                nome TEXT,
-                data_nascimento DATE,
-                CPF_Responsavel TEXT,
-                CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
+                Nome TEXT NOT NULL,
+                Data_Nascimento DATE,
+                CPF_RESPONSAVEL TEXT,
+                CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_RESPONSAVEL) REFERENCES Responsavel(CPF)
             )
         """)
         
@@ -142,11 +138,11 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Setor (
                 CNPJ_Fabrica TEXT,
-                COD_Setor TEXT,
-                nome TEXT,
-                finalidade TEXT,
-                data_criacao DATE,
-                CONSTRAINT PK_SETOR PRIMARY KEY (CNPJ_Fabrica, COD_Setor),
+                COD_SETOR TEXT,
+                Nome TEXT NOT NULL,
+                Finalidade TEXT NOT NULL,
+                Data_Criacao DATE,
+                CONSTRAINT PK_SETOR PRIMARY KEY (CNPJ_Fabrica, COD_SETOR),
                 CONSTRAINT FK_SETOR_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
             )
         """)
@@ -155,74 +151,52 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Maquina (
                 ID TEXT PRIMARY KEY,
-                MODELO TEXT,
-                DATA_INST DATE,
+                Modelo TEXT,
+                Data_Instalacao DATE,
                 CNPJ_Fabrica_Setor TEXT NOT NULL,
                 COD_Setor TEXT NOT NULL,
                 CONSTRAINT FK_MAQUINA_SETOR FOREIGN KEY (CNPJ_Fabrica_Setor, COD_Setor) 
-                    REFERENCES Setor(CNPJ_Fabrica, COD_Setor)
+                    REFERENCES Setor(CNPJ_Fabrica, COD_SETOR)
             )
         """)
-        
-        # 3. Mapeamento da Hierarquia de Herança
         
         # OompaLoompa
         cursor.execute("""
             CREATE TABLE OompaLoompa (
-                CPF_FUNC TEXT PRIMARY KEY,
-                TRIBO TEXT,
-                CONSTRAINT FK_OOMPA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
+                CPF_FUNCIONARIO TEXT PRIMARY KEY,
+                Tribo TEXT,
+                CONSTRAINT FK_OOMPA_FUNC FOREIGN KEY (CPF_FUNCIONARIO) REFERENCES Funcionario(CPF)
             )
         """)
         
         # Pessoa
         cursor.execute("""
             CREATE TABLE Pessoa (
-                CPF_FUNC TEXT PRIMARY KEY,
-                CONSTRAINT FK_PESSOA_FUNC FOREIGN KEY (CPF_FUNC) REFERENCES Funcionario(CPF)
+                CPF_FUNCIONARIO TEXT PRIMARY KEY,
+                Profissao TEXT,
+                CONSTRAINT FK_PESSOA_FUNC FOREIGN KEY (CPF_FUNCIONARIO) REFERENCES Funcionario(CPF)
             )
         """)
         
-        # Chiclete
-        cursor.execute("""
-            CREATE TABLE Chiclete (
-                ID_PRODUTO TEXT PRIMARY KEY,
-                CONSTRAINT FK_CHICLETE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID)
-            )
-        """)
-        
-        # Chocolate
-        cursor.execute("""
-            CREATE TABLE Chocolate (
-                ID_PRODUTO TEXT PRIMARY KEY,
-                TIPO TEXT,
-                RECHEIO TEXT,
-                CPF_CRIANCA TEXT,
-                CONSTRAINT FK_CHOCOLATE_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
-                CONSTRAINT FK_CHOCOLATE_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Criança(CPF)
-            )
-        """)
-        
-        # 4. Tabelas de Atributos Multivalorados e Relacionamentos
         # Contatos
         cursor.execute("""
-            CREATE TABLE ContatosResponsavel (
-                CPF_Responsavel TEXT,
+            CREATE TABLE Contatos (
+                CPF_RESPONSAVEL TEXT,
                 Contatos TEXT,
-                CONSTRAINT PK_CONTATOS PRIMARY KEY (CPF_Responsavel, Contatos),
-                CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_Responsavel) REFERENCES Responsavel(CPF)
+                CONSTRAINT PK_CONTATOS PRIMARY KEY (CPF_RESPONSAVEL, Contatos),
+                CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_RESPONSAVEL) REFERENCES Responsavel(CPF)
             )
         """)
         
         # Visita
         cursor.execute("""
             CREATE TABLE Visita (
-                CPF_Criança TEXT,
-                CNPJ_Fabrica TEXT,
-                data_visita DATE,
-                CONSTRAINT PK_VISITA PRIMARY KEY (CPF_Criança, CNPJ_Fabrica),
-                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_Criança) REFERENCES Criança(CPF),
-                CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_Fabrica) REFERENCES Fabrica(CNPJ)
+                CPF_CRIANCA TEXT,
+                CNPJ_FABRICA TEXT,
+                Data_Visita DATE,
+                CONSTRAINT PK_VISITA PRIMARY KEY (CPF_CRIANCA, CNPJ_FABRICA, Data_Visita),
+                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF),
+                CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_FABRICA) REFERENCES Fabrica(CNPJ)
             )
         """)
         
@@ -230,26 +204,25 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Acidente (
                 ID TEXT PRIMARY KEY,
-                data_acidente DATE,
-                gravidade TEXT,
-                musica TEXT,
-                CPF_Criança_Visita TEXT,
-                CNPJ_Fabrica_Visita TEXT,
+                Data_Acidente DATE NOT NULL,
+                Gravidade TEXT,
+                Musica TEXT,
+                CPF_Criança_Visita TEXT NOT NULL,
+                CNPJ_Fabrica_Visita TEXT NOT NULL,
                 CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Criança_Visita, CNPJ_Fabrica_Visita) 
-                    REFERENCES Visita(CPF_Criança, CNPJ_Fabrica),
-                CONSTRAINT AK_ACID_VISITA UNIQUE (CPF_Criança_Visita, CNPJ_Fabrica_Visita)
+                    REFERENCES Visita(CPF_CRIANCA, CNPJ_FABRICA)
             )
         """)
         
         # PRODUZ
         cursor.execute("""
             CREATE TABLE PRODUZ (
-                ID_PRODUTO TEXT,
+                ID_CHOCOLATE TEXT,
                 CPF_OOMPALOOMPA TEXT,
                 ID_MAQUINA TEXT,
-                CONSTRAINT PK_PRODUZ PRIMARY KEY (ID_PRODUTO, CPF_OOMPALOOMPA, ID_MAQUINA),
-                CONSTRAINT FK_PRODUZ_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
-                CONSTRAINT FK_PRODUZ_OOMPA FOREIGN KEY (CPF_OOMPALOOMPA) REFERENCES OompaLoompa(CPF_FUNC),
+                CONSTRAINT PK_PRODUZ PRIMARY KEY (ID_CHOCOLATE, CPF_OOMPALOOMPA, ID_MAQUINA),
+                CONSTRAINT FK_PRODUZ_CHOC FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID),
+                CONSTRAINT FK_PRODUZ_OOMPA FOREIGN KEY (CPF_OOMPALOOMPA) REFERENCES OompaLoompa(CPF_FUNCIONARIO),
                 CONSTRAINT FK_PRODUZ_MAQ FOREIGN KEY (ID_MAQUINA) REFERENCES Maquina(ID)
             )
         """)
@@ -257,24 +230,11 @@ def criar_tabelas():
         # USA
         cursor.execute("""
             CREATE TABLE USA (
-                ID_PRODUTO TEXT,
-                COD_INGREDIENTE TEXT,
-                quantidade REAL,
-                CONSTRAINT PK_USA PRIMARY KEY (ID_PRODUTO, COD_INGREDIENTE),
-                CONSTRAINT FK_USA_PROD FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID),
-                CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
-            )
-        """)
-        
-        # BilheteDourado
-        cursor.execute("""
-            CREATE TABLE BilheteDourado (
-                COD TEXT PRIMARY KEY,
-                CATEGORIA TEXT,
-                DATA_ENCONTRADO DATE,
-                LOCAL_COMPRA TEXT,
                 ID_CHOCOLATE TEXT,
-                CONSTRAINT FK_BILHETE_CHOCO FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID_PRODUTO)
+                COD_INGREDIENTE TEXT,
+                CONSTRAINT PK_USA PRIMARY KEY (ID_CHOCOLATE, COD_INGREDIENTE),
+                CONSTRAINT FK_USA_CHOC FOREIGN KEY (ID_CHOCOLATE) REFERENCES Chocolate(ID),
+                CONSTRAINT FK_USA_INGR FOREIGN KEY (COD_INGREDIENTE) REFERENCES Ingrediente(COD)
             )
         """)
         
