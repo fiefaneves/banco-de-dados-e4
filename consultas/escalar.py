@@ -4,11 +4,13 @@ cursor = conn.cursor()
 
 #Subconsulta Escalar: Contagem de Ingredientes por Produto
 sql_scalar = """
-    SELECT
-        p.NOME,
-        (SELECT COUNT(*) FROM USA u WHERE u.ID_PRODUTO = p.ID)
-    FROM Produto p;
+        C.Nome as Nome_Chocolate,
+        (SELECT COUNT(*) FROM USA U WHERE U.ID_CHOCOLATE = C.ID) as Qtd_Ingredientes
+    FROM Chocolate C
+    ORDER BY Qtd_Ingredientes DESC, C.Nome;
 """
+    
+
 cursor.execute(sql_scalar)
 resultados = cursor.fetchall()
 

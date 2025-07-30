@@ -4,16 +4,19 @@ conn = sqlite3.connect('fabrica_chocolate.db')
 cursor = conn.cursor()
 
 # Subconsulta de linha: Produtos com o mesmo preço e data de validade do produto 'PROD001'
-cursor.execute('''
-    SELECT NOME, PRECO, DATA_VAL
-    FROM Produto
-    WHERE (PRECO, DATA_VAL) = (
-        SELECT PRECO, DATA_VAL
-        FROM Produto
-        WHERE ID = 'PROD001'
-    )
-    AND ID != 'PROD001'
-''')
+cursor.execute("""
+        SELECT 
+            NOME, 
+            TIPO
+        FROM Chocolate
+        WHERE (Data_Validade, Tipo) = (
+            SELECT Data_Validade, Tipo
+            FROM Chocolate
+            WHERE ID = 'CHOC001'
+        )
+        AND ID != 'CHOC001'
+""")
+
 for nome, preco, data_val in cursor.fetchall():
     print(f"Produto: {nome}")
     print(f"Preço: R$ {preco:.2f}")
