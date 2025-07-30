@@ -71,22 +71,21 @@ def consulta_left_join():
     )
 
 def consulta_inner_join():
-    """INNER JOIN - Produtos e seus ingredientes"""
+    """INNER JOIN - Chocolates e seus ingredientes"""
     query = """
     SELECT
-        P.NOME AS Nome_Produto,
-        I.NOME AS Nome_Ingrediente,
-        U.quantidade AS Quantidade_Usada
-    FROM Produto P
-    INNER JOIN USA U ON P.ID = U.ID_PRODUTO
+        C.Nome AS Nome_Chocolate,
+        I.Nome AS Nome_Ingrediente
+    FROM Chocolate C
+    INNER JOIN USA U ON C.ID = U.ID_CHOCOLATE
     INNER JOIN Ingrediente I ON U.COD_INGREDIENTE = I.COD
-    ORDER BY P.NOME, I.NOME;
+    ORDER BY C.Nome, I.Nome;
     """
     
     executar_consulta(
         query,
-        "INNER JOIN - Produtos e Ingredientes",
-        "Lista todos os produtos com seus respectivos ingredientes e quantidades"
+        "INNER JOIN - Chocolates e Ingredientes",
+        "Lista todos os chocolates com seus respectivos ingredientes"
     )
 
 def consulta_union():
@@ -129,24 +128,21 @@ def consulta_semi_join():
     )
 
 def consulta_anti_join():
-    """ANTI-JOIN - Chocolates sem bilhete dourado"""
+    """ANTI-JOIN - Responsáveis sem criança"""
     query = """
-    SELECT 
-        CHOCO.ID_PRODUTO as ID_Chocolate,
-        P.NOME as Nome_Produto
-    FROM CHOCOLATE CHOCO
-    INNER JOIN Produto P ON CHOCO.ID_PRODUTO = P.ID
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM BILHETEDOURADO B 
-        WHERE B.ID_CHOCOLATE = CHOCO.ID_PRODUTO
-    );
+        SELECT R.NOME
+        FROM RESPONSAVEL R
+        WHERE NOT EXISTS (
+            SELECT *
+            FROM CRIANCA C
+            WHERE C.CPF_RESPONSAVEL = R.CPF
+        )
     """
     
     executar_consulta(
         query,
-        "ANTI-JOIN - Chocolates sem Bilhete Dourado",
-        "Mostra chocolates que não possuem bilhete dourado"
+        "ANTI-JOIN - Responsáveis sem criança",
+        "Mostra os responsáveis que não tem criança"
     )
 
 def consulta_group_by_having():
@@ -168,19 +164,19 @@ def consulta_group_by_having():
     )
 
 def consulta_subconsulta_escalar():
-    """Subconsulta Escalar - Contagem de ingredientes por produto"""
+    """Subconsulta Escalar - Contagem de ingredientes por chocolate"""
     query = """
     SELECT
-        p.NOME as Nome_Produto,
-        (SELECT COUNT(*) FROM USA u WHERE u.ID_PRODUTO = p.ID) as Qtd_Ingredientes
-    FROM Produto p
-    ORDER BY Qtd_Ingredientes DESC, p.NOME;
+        C.Nome as Nome_Chocolate,
+        (SELECT COUNT(*) FROM USA U WHERE U.ID_CHOCOLATE = C.ID) as Qtd_Ingredientes
+    FROM Chocolate C
+    ORDER BY Qtd_Ingredientes DESC, C.Nome;
     """
     
     executar_consulta(
         query,
-        "SUBCONSULTA ESCALAR - Ingredientes por Produto",
-        "Conta quantos ingredientes cada produto utiliza"
+        "SUBCONSULTA ESCALAR - Ingredientes por Chocolate",
+        "Conta quantos ingredientes cada chocolate utiliza"
     )
 
 def consulta_subconsulta_linha():
@@ -205,28 +201,28 @@ def consulta_subconsulta_linha():
     )
 
 def consulta_subconsulta_tabela():
-    """Subconsulta de Tabela - Produtos que usam Avelã"""
+    """Subconsulta de Tabela - Chocolates que usam Avelã"""
     query = """
     SELECT 
-        P.NOME as Nome_Produto,
-        P.PRECO as Preco
-    FROM Produto P
-    WHERE P.ID IN (
-        SELECT U.ID_PRODUTO
+        C.Nome as Nome_Chocolate
+    FROM Chocolate C
+    WHERE C.ID IN (
+        SELECT U.ID_CHOCOLATE
         FROM USA U
         WHERE U.COD_INGREDIENTE = (
             SELECT I.COD 
             FROM Ingrediente I 
-            WHERE I.NOME = 'Avelã'
+            WHERE I.Nome = 'Avelã'
         )
     );
     """
     
     executar_consulta(
         query,
-        "SUBCONSULTA DE TABELA - Produtos com Avelã",
-        "Produtos que utilizam Avelã como ingrediente"
+        "SUBCONSULTA DE TABELA - Chocolates com Avelã",
+        "Chocolates que utilizam Avelã como ingrediente"
     )
+
 
 def verificar_banco():
     """Verifica se o banco de dados existe e tem dados"""
