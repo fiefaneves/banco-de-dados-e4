@@ -59,15 +59,15 @@ def consulta_left_join():
     """LEFT JOIN - Nomes das crianças que não compraram chocolates"""
     query = """
     SELECT CRI.nome as Nome_Crianca
-    FROM Criança cri
+    FROM Crianca cri
     LEFT JOIN Chocolate choco ON cri.CPF = choco.CPF_CRIANCA
     WHERE choco.CPF_CRIANCA IS NULL;
     """
     
     executar_consulta(
         query, 
-        "LEFT JOIN - Crianças sem Chocolates",
-        "Mostra o nome das crianças que não compraram chocolates"
+        "LEFT JOIN - Criancas sem Chocolates",
+        "Mostra o nome das criancas que não compraram chocolates"
     )
 
 def consulta_inner_join():
@@ -95,8 +95,8 @@ def consulta_union():
     SELECT CPF, 'Responsavel' as Tipo
     FROM Responsavel 
     UNION
-    SELECT CPF, 'Criança' as Tipo
-    FROM Criança
+    SELECT CPF, 'Crianca' as Tipo
+    FROM Crianca
     UNION
     SELECT CPF, 'Funcionario' as Tipo
     FROM Funcionario
@@ -113,19 +113,19 @@ def consulta_semi_join():
     """SEMI-JOIN - Crianças que sofreram acidentes"""
     query = """
     SELECT c.nome as Nome_Crianca
-    FROM Criança c
+    FROM Crianca c
     WHERE EXISTS (
         SELECT 1 
         FROM Visita v
-        JOIN Acidente a ON v.CPF_Criança = a.CPF_Criança_Visita
-        WHERE v.CPF_Criança = c.CPF
+        JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
+        WHERE v.CPF_Crianca = c.CPF
     );
     """
     
     executar_consulta(
         query,
-        "SEMI-JOIN - Crianças com Acidentes",
-        "Lista crianças que sofreram acidentes durante as visitas"
+        "SEMI-JOIN - Criancas com Acidentes",
+        "Lista criancas que sofreram acidentes durante as visitas"
     )
 
 def consulta_anti_join():
@@ -266,10 +266,10 @@ def menu_principal():
         return
     
     opcoes = {
-        '1': ('LEFT JOIN - Crianças sem Chocolates', consulta_left_join),
+        '1': ('LEFT JOIN - Criancas sem Chocolates', consulta_left_join),
         '2': ('INNER JOIN - Produtos e Ingredientes', consulta_inner_join),
         '3': ('UNION - Todos os CPFs', consulta_union),
-        '4': ('SEMI-JOIN - Crianças com Acidentes', consulta_semi_join),
+        '4': ('SEMI-JOIN - Criancas com Acidentes', consulta_semi_join),
         '5': ('ANTI-JOIN - Chocolates sem Bilhete Dourado', consulta_anti_join),
         '6': ('GROUP BY HAVING - Tribos Numerosas', consulta_group_by_having),
         '7': ('SUBCONSULTA ESCALAR - Ingredientes por Produto', consulta_subconsulta_escalar),
