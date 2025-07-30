@@ -207,9 +207,9 @@ def criar_tabelas():
                 Data_Acidente DATE NOT NULL,
                 Gravidade TEXT,
                 Musica TEXT,
-                CPF_Criança_Visita TEXT NOT NULL,
+                CPF_Crianca_Visita TEXT NOT NULL,
                 CNPJ_Fabrica_Visita TEXT NOT NULL,
-                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Criança_Visita, CNPJ_Fabrica_Visita) 
+                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Crianca_Visita, CNPJ_Fabrica_Visita) 
                     REFERENCES Visita(CPF_CRIANCA, CNPJ_FABRICA)
             )
         """)
