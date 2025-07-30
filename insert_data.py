@@ -22,7 +22,8 @@ def inserir_dados():
         # Inserir Responsáveis
         responsaveis = [
             ('12345678901', 'João Silva', '1980-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
-            ('98765432109', 'Maria Santos', '1985-08-20', 'Av. Principal, 456', '87654321', 'Jardins', 'Rio de Janeiro')
+            ('98765432109', 'Maria Santos', '1985-08-20', 'Av. Principal, 456', '87654321', 'Jardins', 'Rio de Janeiro'),
+            ('55555555555', 'Carlos Oliveira', '1975-02-10', 'Rua Secundária, 789', '11223344', 'Bairro Novo', 'Belo Horizonte')
         ]
         
         cursor.executemany("""
@@ -51,7 +52,8 @@ def inserir_dados():
         criancas = [
             ('11111111111', 'Charlie Bucket', '2010-05-15', '12345678901'),
             ('22222222222', 'Veruca Salt', '2009-08-20', '98765432109'),
-            ('33333333333', 'Violet Beauregarde', '2011-03-10', '12345678901')
+            ('33333333333', 'Violet Beauregarde', '2011-03-10', '12345678901'),
+            ('44444444444', 'Mike Teavee', '2012-02-15', '55555555555')
         ]
         
         cursor.executemany("""
