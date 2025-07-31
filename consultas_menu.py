@@ -114,7 +114,7 @@ def consulta_semi_join():
     SELECT c.nome as Nome_Crianca
     FROM Crianca c
     WHERE EXISTS (
-        SELECT 1 
+        SELECT * 
         FROM Visita v
         JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
         WHERE v.CPF_Crianca = c.CPF
@@ -146,7 +146,7 @@ def consulta_anti_join():
     )
 
 def consulta_group_by_having():
-    """GROUP BY HAVING - Tribos com múltiplos OompaLoompas"""
+    """GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa"""
     query = """
     SELECT 
         TRIBO,
@@ -159,7 +159,7 @@ def consulta_group_by_having():
     
     executar_consulta(
         query,
-        "GROUP BY HAVING - Tribos Numerosas",
+        "GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa",
         "Tribos que têm mais de 1 OompaLoompa"
     )
 
@@ -196,31 +196,34 @@ def consulta_subconsulta_linha():
     
     executar_consulta(
         query,
-        "SUBCONSULTA DE LINHA - Produtos com Mesmo Preço e Validade",
-        "Produtos que têm o mesmo preço e data de validade do PROD001"
+        "SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do CHOC001",
+        "Chocolates que têm a mesma data de validade e tipo do chocolate 'CHOC001', exceto ele mesmo"
     )
 
 def consulta_subconsulta_tabela():
-    """Subconsulta de Tabela - Chocolates que usam Avelã"""
+    """Subconsulta de Tabela - Responsáveis por Crianças Acidentadas com Alta Gravidade"""
     query = """
-    SELECT 
-        C.Nome as Nome_Chocolate
-    FROM Chocolate C
-    WHERE C.ID IN (
-        SELECT U.ID_CHOCOLATE
-        FROM USA U
-        WHERE U.COD_INGREDIENTE = (
-            SELECT I.COD 
-            FROM Ingrediente I 
-            WHERE I.Nome = 'Avelã'
+    SELECT
+        R.NOME,
+        R.DATA_NASCIMENTO
+    FROM
+        RESPONSAVEL R
+    WHERE
+        R.CPF IN (
+            SELECT C.CPF_RESPONSAVEL
+            FROM CRIANCA C
+            WHERE C.CPF IN (
+                SELECT A.CPF_Crianca_Visita
+                FROM ACIDENTE A
+                WHERE A.GRAVIDADE = 'Alta'
         )
     );
     """
     
     executar_consulta(
         query,
-        "SUBCONSULTA DE TABELA - Chocolates com Avelã",
-        "Chocolates que utilizam Avelã como ingrediente"
+        "SUBCONSULTA DE TABELA - Responsáveis por Crianças Acidentadas com Alta Gravidade",
+        "Responsáveis por crianças que sofreram acidentes de alta gravidade"
     )
 
 
@@ -262,14 +265,14 @@ def menu_principal():
     
     opcoes = {
         '1': ('LEFT JOIN - Criancas sem Chocolates', consulta_left_join),
-        '2': ('INNER JOIN - Produtos e Ingredientes', consulta_inner_join),
+        '2': ('INNER JOIN - Chocolates e seus ingredientes', consulta_inner_join),
         '3': ('UNION - Todos os CPFs', consulta_union),
         '4': ('SEMI-JOIN - Criancas com Acidentes', consulta_semi_join),
-        '5': ('ANTI-JOIN - Chocolates sem Bilhete Dourado', consulta_anti_join),
-        '6': ('GROUP BY HAVING - Tribos Numerosas', consulta_group_by_having),
-        '7': ('SUBCONSULTA ESCALAR - Ingredientes por Produto', consulta_subconsulta_escalar),
-        '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do Chocolate ao Leite Premium', consulta_subconsulta_linha),
-        '9': ('SUBCONSULTA DE TABELA - Produtos com Avelã', consulta_subconsulta_tabela),
+        '5': ('ANTI-JOIN - Responsáveis sem crianças', consulta_anti_join),
+        '6': ('GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa', consulta_group_by_having),
+        '7': ('SUBCONSULTA ESCALAR - Ingredientes por Chocolate', consulta_subconsulta_escalar),
+        '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do CHOC001', consulta_subconsulta_linha),
+        '9': ('SUBCONSULTA DE TABELA - Responsáveis por Crianças Acidentadas com Alta Gravidade', consulta_subconsulta_tabela),
         '10': ('EXECUTAR TODAS AS CONSULTAS', None),
         '0': ('SAIR', None)
     }

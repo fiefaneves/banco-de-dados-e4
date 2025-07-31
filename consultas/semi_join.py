@@ -3,16 +3,16 @@ conn = sqlite3.connect("fabrica_chocolate.db")
 cursor = conn.cursor()
 
 #Semi-Join: Crianças que Sofreram Acidente
-sql_semi_join = """
+cursor.execute("""
     SELECT c.nome
-    FROM Criança c
-    WHERE EXISTS (SELECT 1 
+    FROM Crianca c
+    WHERE EXISTS (
+        SELECT *
         FROM Visita v
-        JOIN Acidente a ON v.CPF_Criança = a.CPF_Criança_Visita
-        WHERE v.CPF_Criança = c.CPF
+        JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
+        WHERE v.CPF_Crianca = c.CPF
     );
-"""
-cursor.execute(sql_semi_join)
+""")
 resultados = cursor.fetchall()
 
 if resultados:

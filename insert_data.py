@@ -21,7 +21,7 @@ def inserir_dados():
     try:
         # Inserir Responsáveis
         responsaveis = [
-            ('12345678901', 'João Silva', '1980-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
+            ('12345678901', 'João Silva', '2018-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
             ('98765432109', 'Maria Santos', '1985-08-20', 'Av. Principal, 456', '87654321', 'Jardins', 'Rio de Janeiro'),
             ('55555555555', 'Carlos Oliveira', '1975-02-10', 'Rua Secundária, 789', '11223344', 'Bairro Novo', 'Belo Horizonte'),
             ('92277742541', 'Marcos Neto', '1999-06-12', 'Rua José, 100', '51000015', 'Graças', 'Recife')
@@ -150,10 +150,15 @@ def inserir_dados():
         """, visitas)
         
         # Inserir Acidente (só para Veruca Salt)
-        cursor.execute("""
+        acidentes = [
+            ('ACD001', '2024-07-01', 'Leve', 'Oompa Loompa Song', '22222222222', '12345678000199'),
+            ('ACD002', '2024-07-01', 'Alta', 'Dangerous Oompa Loompa Song', '11111111111', '12345678000199')
+        ]
+
+        cursor.executemany("""
             INSERT INTO Acidente (ID, Data_Acidente, Gravidade, Musica, CPF_Crianca_Visita, CNPJ_Fabrica_Visita) 
-            VALUES ('ACD001', '2024-07-01', 'Leve', 'Oompa Loompa Song', '22222222222', '12345678000199')
-        """)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, acidentes)
         
         # Inserir Produção
         producao = [
