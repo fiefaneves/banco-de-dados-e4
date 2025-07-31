@@ -21,7 +21,7 @@ def inserir_dados():
     try:
         # Inserir Responsáveis
         responsaveis = [
-            ('12345678901', 'João Silva', '2018-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
+            ('12345678901', 'João Silva', '1980-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
             ('98765432109', 'Maria Santos', '1985-08-20', 'Av. Principal, 456', '87654321', 'Jardins', 'Rio de Janeiro'),
             ('55555555555', 'Carlos Oliveira', '1975-02-10', 'Rua Secundária, 789', '11223344', 'Bairro Novo', 'Belo Horizonte'),
             ('92277742541', 'Marcos Neto', '1999-06-12', 'Rua José, 100', '51000015', 'Graças', 'Recife')
