@@ -71,22 +71,21 @@ def consulta_left_join():
     )
 
 def consulta_inner_join():
-    """INNER JOIN - Produtos e seus ingredientes"""
+    """INNER JOIN - Chocolates e seus ingredientes"""
     query = """
     SELECT
-        P.NOME AS Nome_Produto,
-        I.NOME AS Nome_Ingrediente,
-        U.quantidade AS Quantidade_Usada
-    FROM Produto P
-    INNER JOIN USA U ON P.ID = U.ID_PRODUTO
+        C.Nome AS Nome_Chocolate,
+        I.Nome AS Nome_Ingrediente
+    FROM Chocolate C
+    INNER JOIN USA U ON C.ID = U.ID_CHOCOLATE
     INNER JOIN Ingrediente I ON U.COD_INGREDIENTE = I.COD
-    ORDER BY P.NOME, I.NOME;
+    ORDER BY C.Nome, I.Nome;
     """
     
     executar_consulta(
         query,
-        "INNER JOIN - Produtos e Ingredientes",
-        "Lista todos os produtos com seus respectivos ingredientes e quantidades"
+        "INNER JOIN - Chocolates e Ingredientes",
+        "Lista todos os chocolates com seus respectivos ingredientes"
     )
 
 def consulta_union():
@@ -115,7 +114,7 @@ def consulta_semi_join():
     SELECT c.nome as Nome_Crianca
     FROM Crianca c
     WHERE EXISTS (
-        SELECT 1 
+        SELECT * 
         FROM Visita v
         JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
         WHERE v.CPF_Crianca = c.CPF
@@ -129,28 +128,25 @@ def consulta_semi_join():
     )
 
 def consulta_anti_join():
-    """ANTI-JOIN - Chocolates sem bilhete dourado"""
+    """ANTI-JOIN - Responsáveis sem criança"""
     query = """
-    SELECT 
-        CHOCO.ID_PRODUTO as ID_Chocolate,
-        P.NOME as Nome_Produto
-    FROM CHOCOLATE CHOCO
-    INNER JOIN Produto P ON CHOCO.ID_PRODUTO = P.ID
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM BILHETEDOURADO B 
-        WHERE B.ID_CHOCOLATE = CHOCO.ID_PRODUTO
-    );
+        SELECT R.NOME
+        FROM RESPONSAVEL R
+        WHERE NOT EXISTS (
+            SELECT *
+            FROM CRIANCA C
+            WHERE C.CPF_RESPONSAVEL = R.CPF
+        )
     """
     
     executar_consulta(
         query,
-        "ANTI-JOIN - Chocolates sem Bilhete Dourado",
-        "Mostra chocolates que não possuem bilhete dourado"
+        "ANTI-JOIN - Responsáveis sem criança",
+        "Mostra os responsáveis que não tem criança"
     )
 
 def consulta_group_by_having():
-    """GROUP BY HAVING - Tribos com múltiplos OompaLoompas"""
+    """GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa"""
     query = """
     SELECT 
         TRIBO,
@@ -163,24 +159,24 @@ def consulta_group_by_having():
     
     executar_consulta(
         query,
-        "GROUP BY HAVING - Tribos Numerosas",
+        "GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa",
         "Tribos que têm mais de 1 OompaLoompa"
     )
 
 def consulta_subconsulta_escalar():
-    """Subconsulta Escalar - Contagem de ingredientes por produto"""
+    """Subconsulta Escalar - Contagem de ingredientes por chocolate"""
     query = """
     SELECT
-        p.NOME as Nome_Produto,
-        (SELECT COUNT(*) FROM USA u WHERE u.ID_PRODUTO = p.ID) as Qtd_Ingredientes
-    FROM Produto p
-    ORDER BY Qtd_Ingredientes DESC, p.NOME;
+        C.Nome as Nome_Chocolate,
+        (SELECT COUNT(*) FROM USA U WHERE U.ID_CHOCOLATE = C.ID) as Qtd_Ingredientes
+    FROM Chocolate C
+    ORDER BY Qtd_Ingredientes DESC, C.Nome;
     """
     
     executar_consulta(
         query,
-        "SUBCONSULTA ESCALAR - Ingredientes por Produto",
-        "Conta quantos ingredientes cada produto utiliza"
+        "SUBCONSULTA ESCALAR - Ingredientes por Chocolate",
+        "Conta quantos ingredientes cada chocolate utiliza"
     )
 
 def consulta_subconsulta_linha():
@@ -200,33 +196,36 @@ def consulta_subconsulta_linha():
     
     executar_consulta(
         query,
-        "SUBCONSULTA DE LINHA - Produtos com Mesmo Preço e Validade",
-        "Produtos que têm o mesmo preço e data de validade do PROD001"
+        "SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do CHOC001",
+        "Chocolates que têm a mesma data de validade e tipo do chocolate 'CHOC001', exceto ele mesmo"
     )
 
 def consulta_subconsulta_tabela():
-    """Subconsulta de Tabela - Produtos que usam Avelã"""
+    """Subconsulta de Tabela - Responsáveis por Crianças Acidentadas com Alta Gravidade"""
     query = """
-    SELECT 
-        P.NOME as Nome_Produto,
-        P.PRECO as Preco
-    FROM Produto P
-    WHERE P.ID IN (
-        SELECT U.ID_PRODUTO
-        FROM USA U
-        WHERE U.COD_INGREDIENTE = (
-            SELECT I.COD 
-            FROM Ingrediente I 
-            WHERE I.NOME = 'Avelã'
+    SELECT
+        R.NOME,
+        R.DATA_NASCIMENTO
+    FROM
+        RESPONSAVEL R
+    WHERE
+        R.CPF IN (
+            SELECT C.CPF_RESPONSAVEL
+            FROM CRIANCA C
+            WHERE C.CPF IN (
+                SELECT A.CPF_Crianca_Visita
+                FROM ACIDENTE A
+                WHERE A.GRAVIDADE = 'Alta'
         )
     );
     """
     
     executar_consulta(
         query,
-        "SUBCONSULTA DE TABELA - Produtos com Avelã",
-        "Produtos que utilizam Avelã como ingrediente"
+        "SUBCONSULTA DE TABELA - Responsáveis por Crianças Acidentadas com Alta Gravidade",
+        "Responsáveis por crianças que sofreram acidentes de alta gravidade"
     )
+
 
 def verificar_banco():
     """Verifica se o banco de dados existe e tem dados"""
@@ -266,14 +265,14 @@ def menu_principal():
     
     opcoes = {
         '1': ('LEFT JOIN - Criancas sem Chocolates', consulta_left_join),
-        '2': ('INNER JOIN - Produtos e Ingredientes', consulta_inner_join),
+        '2': ('INNER JOIN - Chocolates e seus ingredientes', consulta_inner_join),
         '3': ('UNION - Todos os CPFs', consulta_union),
         '4': ('SEMI-JOIN - Criancas com Acidentes', consulta_semi_join),
-        '5': ('ANTI-JOIN - Chocolates sem Bilhete Dourado', consulta_anti_join),
-        '6': ('GROUP BY HAVING - Tribos Numerosas', consulta_group_by_having),
-        '7': ('SUBCONSULTA ESCALAR - Ingredientes por Produto', consulta_subconsulta_escalar),
-        '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do Chocolate ao Leite Premium', consulta_subconsulta_linha),
-        '9': ('SUBCONSULTA DE TABELA - Produtos com Avelã', consulta_subconsulta_tabela),
+        '5': ('ANTI-JOIN - Responsáveis sem crianças', consulta_anti_join),
+        '6': ('GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa', consulta_group_by_having),
+        '7': ('SUBCONSULTA ESCALAR - Ingredientes por Chocolate', consulta_subconsulta_escalar),
+        '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do CHOC001', consulta_subconsulta_linha),
+        '9': ('SUBCONSULTA DE TABELA - Responsáveis por Crianças Acidentadas com Alta Gravidade', consulta_subconsulta_tabela),
         '10': ('EXECUTAR TODAS AS CONSULTAS', None),
         '0': ('SAIR', None)
     }

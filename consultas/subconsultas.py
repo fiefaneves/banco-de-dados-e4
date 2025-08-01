@@ -3,37 +3,46 @@ import sqlite3
 conn = sqlite3.connect('fabrica_chocolate.db')
 cursor = conn.cursor()
 
-# Subconsulta de linha: Produtos com o mesmo preço e data de validade do produto 'PROD001'
-cursor.execute('''
-    SELECT NOME, PRECO, DATA_VAL
-    FROM Produto
-    WHERE (PRECO, DATA_VAL) = (
-        SELECT PRECO, DATA_VAL
-        FROM Produto
-        WHERE ID = 'PROD001'
-    )
-    AND ID != 'PROD001'
-''')
-for nome, preco, data_val in cursor.fetchall():
-    print(f"Produto: {nome}")
-    print(f"Preço: R$ {preco:.2f}")
-    print(f"Data de Validade: {data_val}")
+# Subconsulta de linha: Chocolates com a mesma data de validade e tipo do chocolate 'CHOC001'
+cursor.execute("""
+        SELECT 
+            NOME,
+            TIPO
+        FROM Chocolate
+        WHERE (Data_Validade, Tipo) = (
+            SELECT Data_Validade, Tipo
+            FROM Chocolate
+            WHERE ID = 'CHOC001'
+        )
+        AND ID != 'CHOC001'
+""")
+
+for nome, tipo in cursor.fetchall():
+    print(f"Nome: {nome}")
+    print(f"Tipo: {tipo}")
 print("-" * 30)
 
-# Subconsulta de tabela: Produtos que usam o ingrediente 'Avelã'
-cursor.execute('''
-    SELECT NOME
-    FROM Produto
-    WHERE ID IN (
-        SELECT ID_PRODUTO
-        FROM USA
-        WHERE COD_INGREDIENTE = (
-            SELECT COD FROM Ingrediente WHERE NOME = 'Avelã'
+# Subconsulta de tabela: Responsáveis por Crianças Acidentadas com Alta Gravidade
+cursor.execute("""
+    SELECT
+        R.NOME,
+        R.DATA_NASCIMENTO
+    FROM
+        RESPONSAVEL R
+    WHERE
+        R.CPF IN (
+            SELECT C.CPF_RESPONSAVEL
+            FROM CRIANCA C
+            WHERE C.CPF IN (
+                SELECT A.CPF_Crianca_Visita
+                FROM ACIDENTE A
+                WHERE A.GRAVIDADE = 'Alta'
         )
-    )
-''')
-for (nome,) in cursor.fetchall():
-    print(f"Produto: {nome}")
+    );
+""")
+for (nome, data_nasc) in cursor.fetchall():
+    print(f"Nome: {nome}")
+    print(f"Data de Nascimento: {data_nasc}")
 print("-" * 30)
 
 conn.close()

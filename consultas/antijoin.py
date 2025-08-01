@@ -1,4 +1,4 @@
-#Consulta que devolve os chocolates sem bilhete dourado
+#Consulta que devolve os responsáveis sem crianças
 import sqlite3
 
 conn = sqlite3.connect("fabrica_chocolate.db")
@@ -6,12 +6,12 @@ cursor = conn.cursor()
 
 cursor.execute(
 """
-    SELECT CHOCO.ID_PRODUTO
-    FROM CHOCOLATE CHOCO
+    SELECT R.NOME
+    FROM RESPONSAVEL R
     WHERE NOT EXISTS (
-        SELECT 1
-        FROM BILHETEDOURADO B 
-        WHERE B.ID_CHOCOLATE = CHOCO.ID_PRODUTO
+        SELECT *
+        FROM CRIANCA C
+        WHERE C.CPF_RESPONSAVEL = R.CPF
     )
 """
 )
@@ -19,15 +19,15 @@ cursor.execute(
 resultado = cursor.fetchall()
 
 print("=" * 50)
-print("    CHOCOLATES SEM BILHETE DOURADO")
+print("    RESPONSÁVEIS SEM CRIANÇAS")
 print("=" * 50)
 
 if resultado:
     for i, linha in enumerate(resultado, 1):
-        print(f"{i:2d}. Produto ID: {linha[0]}")
-    print(f"\nTotal: {len(resultado)} chocolates sem bilhete dourado")
+        print(f"{i:2d}. Nome: {linha[0]}")
+    print(f"\nTotal: {len(resultado)} responsáveis sem crianças")
 else:
-    print("Todos os chocolates possuem bilhete dourado!")
+    print("Todos os responsáveis possuem crianças!")
 
 print("=" * 50)
 
