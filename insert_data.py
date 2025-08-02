@@ -19,27 +19,27 @@ def inserir_dados():
     cursor = conn.cursor()
     
     try:
-        # Inserir Responsáveis
-        responsaveis = [
-            ('12345678901', 'João Silva', '1980-05-15', 'Rua das Flores, 123', '12345678', 'Centro', 'São Paulo'),
-            ('98765432109', 'Maria Santos', '1985-08-20', 'Av. Principal, 456', '87654321', 'Jardins', 'Rio de Janeiro'),
-            ('55555555555', 'Carlos Oliveira', '1975-02-10', 'Rua Secundária, 789', '11223344', 'Bairro Novo', 'Belo Horizonte'),
-            ('92277742541', 'Marcos Neto', '1999-06-12', 'Rua José, 100', '51000015', 'Graças', 'Recife')
-        ] 
-        
+        # Inserir Responsáveis e Crianças
+        responsaveis_criancas = [
+            ('11111111111', '12345678901', 'Charlie Bucket', 'João Silva', '2010-05-15', '1980-05-15', '12345678', 'Rua das Flores, 123', 'Centro', 'São Paulo'),
+            ('22222222222', '98765432109', 'Veruca Salt', 'Maria Santos', '2009-08-20', '1985-08-20', '87654321', 'Av. Principal, 456', 'Jardins', 'Rio de Janeiro'),
+            ('44444444444', '55555555555', 'Mike Teavee', 'Carlos Oliveira', '2012-02-15', '1975-02-10', '11223344', 'Rua Secundária, 789', 'Bairro Novo', 'Belo Horizonte'),
+            ('33333333333', '92277742541', 'Violet Beauregarde', 'Marcos Neto', '2011-03-10', '1999-06-12', '51000015', 'Rua José, 100', 'Graças', 'Recife')
+        ]
+
         cursor.executemany("""
-            INSERT INTO Responsavel (CPF, Nome, Data_Nascimento, End_rua, End_cep, End_bairro, End_estado) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, responsaveis)
+            INSERT INTO Responsavel_Crianca (CPF_CRIANCA, CPF_RESPONSAVEL, Nome_Crianca, Nome_Responsavel, Data_Nascimento_Crianca, Data_Nascimento_Responsavel, End_cep, End_rua, End_bairro, End_estado) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, responsaveis_criancas) 
         
         # Inserir Contatos
         contatos = [
-            ('12345678901', '(11) 99999-9999'),
-            ('98765432109', '(21) 88888-8888')
+            ('11111111111', '(11) 99999-9999'),
+            ('22222222222', '(21) 88888-8888')
         ]
         
         cursor.executemany("""
-            INSERT INTO Contatos (CPF_RESPONSAVEL, Contatos) 
+            INSERT INTO Contatos (CPF_CRIANCA, Contatos) 
             VALUES (?, ?)
         """, contatos)
         
@@ -48,19 +48,6 @@ def inserir_dados():
             INSERT INTO Fabrica (CNPJ, Data_Fundacao) 
             VALUES ('12345678000199', '1971-01-15')
         """)
-        
-        # Inserir Crianças
-        criancas = [
-            ('11111111111', 'Charlie Bucket', '2010-05-15', '12345678901'),
-            ('22222222222', 'Veruca Salt', '2009-08-20', '98765432109'),
-            ('33333333333', 'Violet Beauregarde', '2011-03-10', '12345678901'),
-            ('44444444444', 'Mike Teavee', '2012-02-15', '55555555555')
-        ]
-        
-        cursor.executemany("""
-            INSERT INTO Crianca (CPF, Nome, Data_Nascimento, CPF_RESPONSAVEL) 
-            VALUES (?, ?, ?, ?)
-        """, criancas)
         
         # Inserir Funcionários
         funcionarios = [
@@ -220,7 +207,7 @@ def verificar_dados():
     cursor = conn.cursor()
     
     tabelas = [
-        'Responsavel', 'Contatos', 'Fabrica', 'Crianca', 'Funcionario', 
+        'Responsavel_Crianca', 'Contatos', 'Fabrica', 'Funcionario', 
         'OompaLoompa', 'Pessoa', 'Setor', 'Maquina', 'Ingrediente', 
         'Chocolate', 'Visita', 'Acidente', 'PRODUZ', 'USA'
     ]

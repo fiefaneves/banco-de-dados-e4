@@ -12,14 +12,11 @@ def conectar_db():
 
 def executar_consulta(query, titulo, descricao):
     """Executa uma consulta e exibe os resultados formatados"""
-    print(f"\n{'='*80}")
     print(f"CONSULTA: {titulo}")
-    print(f"{'='*80}")
     print(f"Descrição: {descricao}")
     print(f"\nSQL:")
     print(query)
-    print(f"\nResultados:")
-    print("-" * 80)
+    print(f"\nResultados:\n")
     
     conn = conectar_db()
     if not conn:
@@ -226,7 +223,6 @@ def consulta_subconsulta_tabela():
         "Responsáveis por crianças que sofreram acidentes de alta gravidade"
     )
 
-
 def verificar_banco():
     """Verifica se o banco de dados existe e tem dados"""
     conn = conectar_db()
@@ -257,8 +253,7 @@ def verificar_banco():
 
 def menu_principal():
     """Menu principal da aplicação"""
-    print("CONSULTAS - FÁBRICA DE CHOCOLATE")
-    print("=" * 50)
+    print("CONSULTAS - FÁBRICA DE CHOCOLATE\n")
     
     if not verificar_banco():
         return
@@ -278,9 +273,7 @@ def menu_principal():
     }
     
     while True:
-        print(f"\n{'='*50}")
-        print("MENU DE CONSULTAS")
-        print("="*50)
+        print("\nMENU DE CONSULTAS")
         
         for key, (desc, _) in opcoes.items():
             if key == '10':
@@ -290,7 +283,7 @@ def menu_principal():
             else:
                 print(f" {key}. {desc}")
         
-        escolha = input(f"\n{'='*50}\nEscolha uma opção: ").strip()
+        escolha = input(f"\n\nEscolha uma opção: ").strip()
         
         if escolha == '0':
             print("\n Obrigado por usar o sistema da Fábrica de Chocolate! ")
@@ -298,16 +291,13 @@ def menu_principal():
             
         elif escolha == '10':
             print("\nEXECUTANDO TODAS AS CONSULTAS...")
-            print("=" * 80)
             
             for key in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
                 if opcoes[key][1]:
                     opcoes[key][1]()
                     input("\nPressione ENTER para continuar...")
             
-            print(f"\n{'='*80}")
             print("TODAS AS CONSULTAS FORAM EXECUTADAS!")
-            print("="*80)
             
         elif escolha in opcoes and opcoes[escolha][1] is not None:
             opcoes[escolha][1]()

@@ -29,12 +29,11 @@ def drop_tables_if_exist():
         'OompaLoompa',
         'Maquina',
         'Setor',
-        'Crianca',
         'Funcionario',
         'Chocolate',
         'Ingrediente',
         'Fabrica',
-        'Responsavel'
+        'Responsavel_Crianca'
     ]
     
     try:
@@ -70,14 +69,17 @@ def criar_tabelas():
         # Habilitar foreign keys
         cursor.execute("PRAGMA foreign_keys = ON")
               
-        # Responsavel
+        # Responsavel_Crianca
         cursor.execute("""
-            CREATE TABLE Responsavel (
-                CPF TEXT PRIMARY KEY,
-                Nome TEXT NOT NULL,
-                Data_Nascimento DATE,
-                End_rua TEXT,
+            CREATE TABLE Responsavel_Crianca (
+                CPF_CRIANCA TEXT PRIMARY KEY,
+                CPF_RESPONSAVEL TEXT UNIQUE NOT NULL,
+                Nome_Crianca TEXT NOT NULL,
+                Nome_Responsavel TEXT NOT NULL,
+                Data_Nascimento_Crianca DATE,
+                Data_Nascimento_Responsavel DATE,
                 End_cep TEXT,
+                End_rua TEXT,
                 End_bairro TEXT,
                 End_estado TEXT
             )
@@ -108,7 +110,7 @@ def criar_tabelas():
                 Tipo TEXT,
                 Data_Validade DATE,
                 CPF_CRIANCA TEXT,
-                CONSTRAINT FK_CHOC_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF)
+                CONSTRAINT FK_CHOC_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Responsavel_Crianca(CPF_CRIANCA)
             )
         """)
         
@@ -120,17 +122,6 @@ def criar_tabelas():
                 Salario REAL,
                 CPF_CHEFE TEXT,
                 CONSTRAINT FK_FUNC_SUPERVISOR FOREIGN KEY (CPF_CHEFE) REFERENCES Funcionario(CPF)
-            )
-        """)
-        
-        # Crianca
-        cursor.execute("""
-            CREATE TABLE Crianca (
-                CPF TEXT PRIMARY KEY,
-                Nome TEXT NOT NULL,
-                Data_Nascimento DATE,
-                CPF_RESPONSAVEL TEXT,
-                CONSTRAINT FK_CRIANCA_RESP FOREIGN KEY (CPF_RESPONSAVEL) REFERENCES Responsavel(CPF)
             )
         """)
         
@@ -181,10 +172,10 @@ def criar_tabelas():
         # Contatos
         cursor.execute("""
             CREATE TABLE Contatos (
-                CPF_RESPONSAVEL TEXT,
+                CPF_CRIANCA TEXT,
                 Contatos TEXT,
-                CONSTRAINT PK_CONTATOS PRIMARY KEY (CPF_RESPONSAVEL, Contatos),
-                CONSTRAINT FK_CONTATOS_RESP FOREIGN KEY (CPF_RESPONSAVEL) REFERENCES Responsavel(CPF)
+                CONSTRAINT PK_CONTATOS PRIMARY KEY (CPF_CRIANCA, Contatos),
+                CONSTRAINT FK_CONTATOS_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Responsavel_Crianca(CPF_CRIANCA)
             )
         """)
         
@@ -195,7 +186,7 @@ def criar_tabelas():
                 CNPJ_FABRICA TEXT,
                 Data_Visita DATE,
                 CONSTRAINT PK_VISITA PRIMARY KEY (CPF_CRIANCA, CNPJ_FABRICA, Data_Visita),
-                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Crianca(CPF),
+                CONSTRAINT FK_VISITA_CRIANCA FOREIGN KEY (CPF_CRIANCA) REFERENCES Responsavel_Crianca(CPF_CRIANCA),
                 CONSTRAINT FK_VISITA_FABRICA FOREIGN KEY (CNPJ_FABRICA) REFERENCES Fabrica(CNPJ)
             )
         """)
@@ -207,9 +198,9 @@ def criar_tabelas():
                 Data_Acidente DATE NOT NULL,
                 Gravidade TEXT,
                 Musica TEXT,
-                CPF_Crianca_Visita TEXT NOT NULL,
-                CNPJ_Fabrica_Visita TEXT NOT NULL,
-                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_Crianca_Visita, CNPJ_Fabrica_Visita) 
+                CPF_CRIANCA_VISITA TEXT NOT NULL,
+                CNPJ_FABRICA_VISITA TEXT NOT NULL,
+                CONSTRAINT FK_ACID_VISITA FOREIGN KEY (CPF_CRIANCA_VISITA, CNPJ_FABRICA_VISITA) 
                     REFERENCES Visita(CPF_CRIANCA, CNPJ_FABRICA)
             )
         """)
@@ -240,9 +231,7 @@ def criar_tabelas():
         
         # Confirmar criação
         conn.commit()
-        print("="*60)
-        print("TODAS AS TABELAS FORAM CRIADAS COM SUCESSO!")
-        print("="*60)
+        print("\nTODAS AS TABELAS FORAM CRIADAS COM SUCESSO!")
         
         return True
         
@@ -268,7 +257,6 @@ def verificar_tabelas():
         tabelas = cursor.fetchall()
         
         print("\nTabelas criadas no banco de dados:")
-        print("-" * 40)
         for i, (tabela,) in enumerate(tabelas, 1):
             print(f"{i:2d}. {tabela}")
         
@@ -283,7 +271,6 @@ def verificar_tabelas():
 def main():
     """Função principal"""
     print("CRIAÇÃO DAS TABELAS - FÁBRICA DE CHOCOLATE")
-    print("="*60)
     
     # Verificar se o arquivo do banco já existe
     if os.path.exists('fabrica_chocolate.db'):
