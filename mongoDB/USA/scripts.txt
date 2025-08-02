@@ -64,9 +64,6 @@ mongosh --file scripts/cenario4_embutido_N_N.js
 
 Ao executar cada comando, você verá no terminal a saída que incluímos com os comandos print(), mostrando o resultado de cada consulta.
 
-Verificação Manual (Opcional)
-Para ter certeza de que os dados foram criados corretamente, você pode se conectar ao banco de dados e verificar as coleções manualmente.
-
 Passe 3 (Opcional): 
 
 - No terminal, digite mongosh.

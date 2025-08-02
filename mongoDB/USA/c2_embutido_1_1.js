@@ -1,6 +1,9 @@
 // Conecta ao banco de dados 'fabrica_de_chocolate'
 db = connect("mongodb://localhost/fabrica_de_chocolate");
 
+// Conecta ao seu banco de dados no Atlas
+db = connect("mongodb+srv://<usuario>:<senha>@<url-do-cluster>/fabrica_de_chocolate");
+
 // Limpa a coleção para garantir um estado inicial limpo
 db.chocolates_embutido_1_1.drop();
 
