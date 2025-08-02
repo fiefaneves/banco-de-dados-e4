@@ -55,9 +55,9 @@ def executar_consulta(query, titulo, descricao):
 def consulta_left_join():
     """LEFT JOIN - Nomes das crianças que não compraram chocolates"""
     query = """
-    SELECT CRI.nome as Nome_Crianca
-    FROM Crianca cri
-    LEFT JOIN Chocolate choco ON cri.CPF = choco.CPF_CRIANCA
+    SELECT RC.Nome_Crianca
+    FROM Responsavel_Crianca RC
+    LEFT JOIN Chocolate choco ON RC.CPF_CRIANCA = choco.CPF_CRIANCA
     WHERE choco.CPF_CRIANCA IS NULL;
     """
     
@@ -86,13 +86,13 @@ def consulta_inner_join():
     )
 
 def consulta_union():
-    """UNION - Todos os CPFs do sistema"""
+    """UNION - Todos os CPFs do sistema e seus Tipos"""
     query = """
-    SELECT CPF, 'Responsavel' as Tipo
-    FROM Responsavel 
+    SELECT CPF_RESPONSAVEL as CPF, 'Responsavel' as Tipo
+    FROM Responsavel_Crianca
     UNION
-    SELECT CPF, 'Crianca' as Tipo
-    FROM Crianca
+    SELECT CPF_CRIANCA as CPF, 'Crianca' as Tipo
+    FROM Responsavel_Crianca
     UNION
     SELECT CPF, 'Funcionario' as Tipo
     FROM Funcionario
@@ -101,53 +101,52 @@ def consulta_union():
     
     executar_consulta(
         query,
-        "UNION - Todos os CPFs do Sistema",
+        "UNION - Todos os CPFs do Sistema e seus Tipos",
         "Mostra todos os CPFs cadastrados no sistema com seus tipos"
     )
 
 def consulta_semi_join():
-    """SEMI-JOIN - Crianças que sofreram acidentes"""
+    """SEMI-JOIN - Nome das crianças que sofreram acidentes"""
     query = """
-    SELECT c.nome as Nome_Crianca
-    FROM Crianca c
+    SELECT c.Nome_Crianca
+    FROM Responsavel_Crianca c
     WHERE EXISTS (
         SELECT * 
         FROM Visita v
         JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
-        WHERE v.CPF_Crianca = c.CPF
+        WHERE v.CPF_Crianca = c.CPF_CRIANCA
     );
     """
     
     executar_consulta(
         query,
-        "SEMI-JOIN - Criancas com Acidentes",
-        "Lista criancas que sofreram acidentes durante as visitas"
+        "SEMI-JOIN - Nome das crianças que sofreram acidentes",
+        "Lista de crianças que sofreram acidentes durante as visitas"
     )
 
 def consulta_anti_join():
-    """ANTI-JOIN - Responsáveis sem criança"""
+    """ANTI-JOIN - Ingredientes que não são usados em nenhum chocolate"""
     query = """
-        SELECT R.NOME
-        FROM RESPONSAVEL R
-        WHERE NOT EXISTS (
-            SELECT *
-            FROM CRIANCA C
-            WHERE C.CPF_RESPONSAVEL = R.CPF
-        )
+    SELECT I.COD, I.Nome, I.Marca
+    FROM Ingrediente I
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM USA U
+        WHERE U.COD_INGREDIENTE = I.COD
+    )
+    ORDER BY I.Nome;
     """
     
     executar_consulta(
         query,
-        "ANTI-JOIN - Responsáveis sem criança",
-        "Mostra os responsáveis que não tem criança"
+        "ANTI-JOIN - Ingredientes não utilizados",
+        "Mostra ingredientes que não são usados em nenhum chocolate"
     )
 
 def consulta_group_by_having():
     """GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa"""
     query = """
-    SELECT 
-        TRIBO,
-        COUNT(*) as Total_OompaLoompas
+    SELECT TRIBO, COUNT(*) as Total_OompaLoompas
     FROM OompaLoompa
     GROUP BY TRIBO
     HAVING COUNT(*) > 1
@@ -163,8 +162,7 @@ def consulta_group_by_having():
 def consulta_subconsulta_escalar():
     """Subconsulta Escalar - Contagem de ingredientes por chocolate"""
     query = """
-    SELECT
-        C.Nome as Nome_Chocolate,
+    SELECT C.Nome as Nome_Chocolate,
         (SELECT COUNT(*) FROM USA U WHERE U.ID_CHOCOLATE = C.ID) as Qtd_Ingredientes
     FROM Chocolate C
     ORDER BY Qtd_Ingredientes DESC, C.Nome;
@@ -179,16 +177,14 @@ def consulta_subconsulta_escalar():
 def consulta_subconsulta_linha():
     """Subconsulta de Linha - Chocolates com mesma data de validade e tipo do CHOC001, exceto ele mesmo"""
     query = """
-        SELECT 
-            NOME, 
-            TIPO
-        FROM Chocolate
-        WHERE (Data_Validade, Tipo) = (
-            SELECT Data_Validade, Tipo
-            FROM Chocolate
-            WHERE ID = 'CHOC001'
+        SELECT C1.Nome, C1.Tipo
+        FROM Chocolate C1
+        WHERE (C1.Data_Validade, C1.Tipo) = (
+            SELECT C2.Data_Validade, C2.Tipo
+            FROM Chocolate C2
+            WHERE C2.ID = 'CHOC001'
         )
-        AND ID != 'CHOC001'
+        AND C1.ID != 'CHOC001'
     """
     
     executar_consulta(
@@ -200,20 +196,12 @@ def consulta_subconsulta_linha():
 def consulta_subconsulta_tabela():
     """Subconsulta de Tabela - Responsáveis por Crianças Acidentadas com Alta Gravidade"""
     query = """
-    SELECT
-        R.NOME,
-        R.DATA_NASCIMENTO
-    FROM
-        RESPONSAVEL R
-    WHERE
-        R.CPF IN (
-            SELECT C.CPF_RESPONSAVEL
-            FROM CRIANCA C
-            WHERE C.CPF IN (
-                SELECT A.CPF_Crianca_Visita
-                FROM ACIDENTE A
-                WHERE A.GRAVIDADE = 'Alta'
-        )
+    SELECT RC.Nome_Responsavel, RC.Nome_Crianca, RC.Data_Nascimento_Crianca
+    FROM Responsavel_Crianca RC
+    WHERE RC.CPF_CRIANCA IN (
+        SELECT A.CPF_Crianca_Visita
+        FROM ACIDENTE A
+        WHERE A.GRAVIDADE = 'Alta'
     );
     """
     
@@ -236,7 +224,7 @@ def verificar_banco():
     cursor = conn.cursor()
     
     try:
-        cursor.execute("SELECT COUNT(*) FROM Responsavel")
+        cursor.execute("SELECT COUNT(*) FROM Responsavel_Crianca")
         if cursor.fetchone()[0] == 0:
             print("Banco de dados vazio!")
             print("\nExecute: python insert_data.py")
@@ -253,7 +241,7 @@ def verificar_banco():
 
 def menu_principal():
     """Menu principal da aplicação"""
-    print("CONSULTAS - FÁBRICA DE CHOCOLATE\n")
+    print("CONSULTAS - FÁBRICA DE CHOCOLATE")
     
     if not verificar_banco():
         return
@@ -261,9 +249,9 @@ def menu_principal():
     opcoes = {
         '1': ('LEFT JOIN - Criancas sem Chocolates', consulta_left_join),
         '2': ('INNER JOIN - Chocolates e seus ingredientes', consulta_inner_join),
-        '3': ('UNION - Todos os CPFs', consulta_union),
-        '4': ('SEMI-JOIN - Criancas com Acidentes', consulta_semi_join),
-        '5': ('ANTI-JOIN - Responsáveis sem crianças', consulta_anti_join),
+        '3': ('UNION - Todos os CPFs do Sistema e seus Tipos', consulta_union),
+        '4': ('SEMI-JOIN - Nome das crianças que sofreram acidentes', consulta_semi_join),
+        '5': ('ANTI-JOIN - Ingredientes que não são usados em nenhum chocolate', consulta_anti_join),
         '6': ('GROUP BY HAVING - Tribos com mais de 1 Oompa-Loompa', consulta_group_by_having),
         '7': ('SUBCONSULTA ESCALAR - Ingredientes por Chocolate', consulta_subconsulta_escalar),
         '8': ('SUBCONSULTA DE LINHA - Chocolates com mesma data de validade e tipo do CHOC001', consulta_subconsulta_linha),
@@ -283,7 +271,7 @@ def menu_principal():
             else:
                 print(f" {key}. {desc}")
         
-        escolha = input(f"\n\nEscolha uma opção: ").strip()
+        escolha = input(f"\nEscolha uma opção: ").strip()
         
         if escolha == '0':
             print("\n Obrigado por usar o sistema da Fábrica de Chocolate! ")

@@ -4,13 +4,13 @@ cursor = conn.cursor()
 
 #Semi-Join: Crianças que Sofreram Acidente
 cursor.execute("""
-    SELECT c.nome
-    FROM Crianca c
+    SELECT c.Nome_Crianca
+    FROM Responsavel_Crianca c
     WHERE EXISTS (
-        SELECT *
+        SELECT * 
         FROM Visita v
         JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
-        WHERE v.CPF_Crianca = c.CPF
+        WHERE v.CPF_Crianca = c.CPF_CRIANCA
     );
 """)
 resultados = cursor.fetchall()

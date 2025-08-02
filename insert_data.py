@@ -101,7 +101,9 @@ def inserir_dados():
             ('ING001', 'Cacau', 'Marca Premium'),
             ('ING002', 'Açúcar', 'Açúcar Cristal'),
             ('ING003', 'Leite', 'Leite Integral'),
-            ('ING004', 'Avelã', 'Avelã Europeia')
+            ('ING004', 'Avelã', 'Avelã Europeia'),
+            ('ING005', 'Baunilha', 'Baunilha Madagascar'),
+            ('ING006', 'Caramelo', 'Caramelo Artesanal')
         ]
         
         cursor.executemany("""
@@ -179,7 +181,8 @@ def inserir_dados():
             ('CHOC005', 'ING001'),  # Cacau na trufa
             ('CHOC005', 'ING002'),  # Açúcar na trufa
             ('CHOC005', 'ING003'),  # Leite na trufa
-            ('CHOC005', 'ING004')   # Avelã na trufa especial
+            ('CHOC005', 'ING004'),  # Avelã na trufa especial
+            ('CHOC006', 'ING001')  # Cacau no chocolate ao leite clássico
         ]
 
         cursor.executemany("""
