@@ -109,8 +109,8 @@
     <links xmi:type="eer:AttributeLink" xmi:id="_H9oZAFRMEfC-RY9vfvqGqQ" source="__EsCYFRLEfC-RY9vfvqGqQ" target="_H9kHkFRMEfC-RY9vfvqGqQ"/>
     <links xmi:type="eer:AttributeLink" xmi:id="_MNazMFRMEfC-RY9vfvqGqQ" source="__EsCYFRLEfC-RY9vfvqGqQ" target="_MNV6sFRMEfC-RY9vfvqGqQ"/>
     <links xmi:type="eer:RelationshipLink" xmi:id="_QamlUFRMEfC-RY9vfvqGqQ" source="__EsCYFRLEfC-RY9vfvqGqQ" target="_BkwLYFRMEfC-RY9vfvqGqQ" cardinality="MANY" role=""/>
-    <links xmi:type="eer:RelationshipLink" xmi:id="_1LjkoFRMEfC-RY9vfvqGqQ" source="_oEYTB1RMEfC-RY9vfvqGqQ" target="_zjQKEFRMEfC-RY9vfvqGqQ"/>
-    <links xmi:type="eer:RelationshipLink" xmi:id="_11-aoFRMEfC-RY9vfvqGqQ" source="_sNyMkEZPEfCmq9CWuq4Zaw" target="_zjQKEFRMEfC-RY9vfvqGqQ" cardinality="MANY"/>
+    <links xmi:type="eer:RelationshipLink" xmi:id="_1LjkoFRMEfC-RY9vfvqGqQ" source="_oEYTB1RMEfC-RY9vfvqGqQ" target="_zjQKEFRMEfC-RY9vfvqGqQ" participation="TOTAL"/>
+    <links xmi:type="eer:RelationshipLink" xmi:id="_11-aoFRMEfC-RY9vfvqGqQ" source="_sNyMkEZPEfCmq9CWuq4Zaw" target="_zjQKEFRMEfC-RY9vfvqGqQ" participation="TOTAL"/>
     <links xmi:type="eer:AttributeLink" xmi:id="_FBKLYFRNEfC-RY9vfvqGqQ" source="_oEYTB1RMEfC-RY9vfvqGqQ" target="_CGo7AFRNEfC-RY9vfvqGqQ"/>
     <links xmi:type="eer:RelationshipLink" xmi:id="_QrKUYFRNEfC-RY9vfvqGqQ" source="_sNyMkEZPEfCmq9CWuq4Zaw" target="_OTiVsFRNEfC-RY9vfvqGqQ" cardinality="MANY"/>
     <links xmi:type="eer:RelationshipLink" xmi:id="_RTjKEFRNEfC-RY9vfvqGqQ" source="_1v3C8EZTEfCmq9CWuq4Zaw" target="_OTiVsFRNEfC-RY9vfvqGqQ" cardinality="MANY"/>
@@ -904,7 +904,7 @@
     </edges>
     <edges xmi:type="notation:Edge" xmi:id="_11_owFRMEfC-RY9vfvqGqQ" type="4006" element="_11-aoFRMEfC-RY9vfvqGqQ" source="_zjQxIFRMEfC-RY9vfvqGqQ" target="_sOFHgEZPEfCmq9CWuq4Zaw">
       <children xmi:type="notation:DecorationNode" xmi:id="_11_oxFRMEfC-RY9vfvqGqQ" type="6006">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_11_oxVRMEfC-RY9vfvqGqQ" x="1" y="15"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_11_oxVRMEfC-RY9vfvqGqQ" x="1" y="-15"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_11_oxlRMEfC-RY9vfvqGqQ" type="6007">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_11_ox1RMEfC-RY9vfvqGqQ" x="5" y="5"/>
