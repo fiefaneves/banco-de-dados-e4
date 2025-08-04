@@ -106,7 +106,7 @@ def criar_tabelas():
         cursor.execute("""
             CREATE TABLE Chocolate (
                 ID TEXT PRIMARY KEY,
-                Nome TEXT UNIQUE NOT NULL,
+                Nome TEXT NOT NULL,
                 Tipo TEXT,
                 Data_Validade DATE,
                 CPF_CRIANCA TEXT,
