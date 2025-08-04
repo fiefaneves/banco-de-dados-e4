@@ -6,6 +6,10 @@ uri = "mongodb+srv://fmn:dbuserfmn@cluster10.icefi.mongodb.net/?retryWrites=true
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client["fabrica_de_chocolate"]
 
+# Limpa as coleções para garantir um estado inicial limpo
+db.chocolates.drop()
+db.ingredientes.drop()
+
 print("--- CENÁRIO 4: Array de Documentos Embutidos ---")
 
 # --- I) Implementação ---
