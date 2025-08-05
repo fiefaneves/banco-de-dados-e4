@@ -74,7 +74,6 @@ Cada consulta exibe:
 - **Acidente** - Acidentes durante visitas
 - **PRODUZ** - OompaLoompas produzem chocolates
 - **USA** - Chocolates usam ingredientes
-- **Contatos** - Contatos dos responsáveis
 
 ## 🛠️ Tecnologias Utilizadas
 
