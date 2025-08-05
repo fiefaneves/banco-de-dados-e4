@@ -24,7 +24,7 @@ print("     TODOS OS CPFs DO SISTEMA")
 
 if resultado:
     for i, linha in enumerate(resultado, 1):
-        print(f"{i:2d}. {linha[0]}")
+        print(f"{i:2d}. {linha[0]} {linha[1]}")
     print(f"\nTotal: {len(resultado)} CPFs encontrados")
 else:
     print("Nenhum CPF encontrado no sistema.")
