@@ -108,14 +108,13 @@ def consulta_union():
 def consulta_semi_join():
     """SEMI-JOIN - Nome das crianças que sofreram acidentes"""
     query = """
-    SELECT c.Nome_Crianca
-    FROM Responsavel_Crianca c
-    WHERE EXISTS (
-        SELECT * 
-        FROM Visita v
-        JOIN Acidente a ON v.CPF_Crianca = a.CPF_Crianca_Visita
-        WHERE v.CPF_Crianca = c.CPF_CRIANCA
-    );
+        SELECT c.Nome_Crianca
+        FROM Responsavel_Crianca c
+        WHERE EXISTS (
+            SELECT 1
+            FROM Acidente a
+            WHERE a.CPF_Crianca_Visita = c.CPF_CRIANCA
+        );
     """
     
     executar_consulta(
