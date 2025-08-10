@@ -12,7 +12,6 @@ db.responsaveis_embutidos.drop()
 print("--- CENÁRIO 4: Documentos Embutidos Múltiplos (Responsável com crianças embutidas) ---")
 
 # I) Implementação
-print("\n1. Inserindo dados...")
 db.responsaveis_embutidos.insert_one({
   "_id": "resp001",
   "nome": "João Silva",
@@ -45,10 +44,8 @@ db.responsaveis_embutidos.insert_one({
     }
   ]
 })
-print("Dados inseridos com sucesso.")
 
 # II) Consulta
-print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes das crianças que são acompanhadas pelo responsável com nome = 'João Silva'?")
 
 resp_doc = db.responsaveis_embutidos.find_one({"nome": "João Silva"})

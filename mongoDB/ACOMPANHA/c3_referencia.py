@@ -13,9 +13,7 @@ db.criancas_refs.drop()
 print("--- CENÁRIO 3: Array de Referências (Responsável com array de crianças) ---")
 
 # I) Implementação
-print("\n1. Inserindo dados...")
 
-# Inserir crianças
 criancas_data = [
     {"_id": "crianca001", "nome": "Charlie Bucket", "cpf": "11111111111", "data_nascimento": "2010-05-15"},
     {"_id": "crianca002", "nome": "Violet Beauregarde", "cpf": "33333333333", "data_nascimento": "2011-03-10"},
@@ -23,7 +21,7 @@ criancas_data = [
 ]
 db.criancas_refs.insert_many(criancas_data)
 
-# Inserir responsável com array de referências para crianças
+
 db.responsaveis_refs.insert_one({
   "_id": "resp001",
   "nome": "João Silva",
@@ -37,10 +35,8 @@ db.responsaveis_refs.insert_one({
   "contatos": ["(11) 99999-9999"],
   "criancas_ids": ["crianca001", "crianca002", "crianca003"]  # Array de referências
 })
-print("Dados inseridos com sucesso.")
 
 # II) Consulta
-print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes das crianças que são acompanhadas pelo responsável com nome = 'João Silva'?")
 
 # Busca o responsável João Silva

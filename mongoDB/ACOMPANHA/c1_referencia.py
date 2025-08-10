@@ -13,7 +13,6 @@ db.criancas.drop()
 print("--- CENÁRIO 1: Referência Simples (Criança → Responsável) ---")
 
 # I) Implementação
-print("\n1. Inserindo dados...")
 db.responsaveis.insert_one({
   "_id": "resp001",
   "nome": "João Silva",
@@ -34,10 +33,8 @@ db.criancas.insert_one({
   "data_nascimento": "2010-05-15",
   "responsavel_id": "resp001"
 })
-print("Dados inseridos com sucesso.")
 
 # II) Consulta
-print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes das crianças que são acompanhadas pelo responsável com nome = 'João Silva'?")
 
 # Busca o responsável João Silva

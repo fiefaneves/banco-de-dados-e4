@@ -12,7 +12,6 @@ db.criancas_com_responsavel.drop()
 print("--- CENÁRIO 2: Documento Embutido Simples (Criança com Responsável embutido) ---")
 
 # I) Implementação
-print("\n1. Inserindo dados...")
 db.criancas_com_responsavel.insert_one({
   "_id": "crianca001",
   "nome": "Charlie Bucket",
@@ -30,10 +29,8 @@ db.criancas_com_responsavel.insert_one({
     "contatos": ["(11) 99999-9999"]
   }
 })
-print("Dados inseridos com sucesso.")
 
 # II) Consulta
-print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes das crianças que são acompanhadas pelo responsável com nome = 'João Silva'?")
 
 criancas = db.criancas_com_responsavel.find({"responsavel.nome": "João Silva"})
