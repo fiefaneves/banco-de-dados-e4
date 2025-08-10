@@ -7,11 +7,11 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client["fabrica_de_chocolate"]
 
 def cenario_4(db):
-    db.criancas.drop()
+    db.criancas_compra.drop()
 
-    print("--- CENÁRIO 1: Array de Referências (Criança com referências a Chocolate) ---")
+    print("--- CENÁRIO 4: Múltiplos Documentos Embutidos (Criança com chocolates embutidos) ---")
 
-    db.criancas.insert_many([
+    db.criancas_compra.insert_many([
         {
             "_id": "crianca001",
             "nome": "Charlie Bucket",
@@ -74,9 +74,12 @@ def cenario_4(db):
     print("Dados inseridos com sucesso.")
 
     print("\nConsulta: Quais são os nomes das crianças que compraram chocolates do tipo 'Ao Leite' ou 'Amargo'?")
-    crianca_docs = db.criancas.find({"chocolates.tipo": {"$in": ["Ao Leite", "Amargo"]}})
+    crianca_docs = db.criancas_compra.find({"chocolates.tipo": {"$in": ["Ao Leite", "Amargo"]}})
     if crianca_docs:
         for crianca in crianca_docs:
             print(f"Criança que comprou chocolate do tipo 'Ao Leite' ou 'Amargo': {crianca['nome']}")
     else:
         print("Nenhuma criança encontrada.")
+
+if __name__ == "__main__":
+    cenario_4(db)
