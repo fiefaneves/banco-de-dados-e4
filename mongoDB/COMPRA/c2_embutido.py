@@ -50,7 +50,7 @@ def cenario_2(db):
                 {
                     "chocolate_id": "chocolate004",
                     "nome": "Chocolate Marrom",
-                    "tipo": "Ao leite",
+                    "tipo": "Ao Leite",
                 }
             ]
         }
@@ -59,7 +59,7 @@ def cenario_2(db):
     print("Dados inseridos com sucesso.")
 
     print("\nConsulta: Quais são os nomes das crianças com chocolate do tipo 'Ao Leite'?")
-    crianca_docs = db.criancas_com_chocolate_compra.find({"chocolates.tipo": "Ao Leite"})
+    crianca_docs = db.criancas_com_chocolate_compra.find({"chocolate.tipo": "Ao Leite"})
     if crianca_docs:
         for crianca in crianca_docs:
             print(f"Criança: {crianca['nome']}")

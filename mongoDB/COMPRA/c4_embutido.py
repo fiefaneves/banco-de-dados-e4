@@ -46,7 +46,7 @@ def cenario_4(db):
                 {
                     "_id": "chocolate004",
                     "nome": "Chocolate Marrom",
-                    "tipo" : "Ao leite",
+                    "tipo" : "Ao Leite",
                 },
             ]
         },
