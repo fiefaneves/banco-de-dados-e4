@@ -10,39 +10,34 @@ db = client["fabrica_de_chocolate"]
 db.chocolates.drop()
 db.ingredientes.drop()
 
-print("--- CENÁRIO 1: Referência ---")
+print("CENÁRIO 1: Referência")
 
-# --- I) Implementação ---
 print("\n1. Inserindo dados...")
 db.ingredientes.insert_one({
-  "_id": "ing001",
+  "_id": "ING001",
   "nome": "Cacau Puro 100%",
   "marca": "Amazônia"
 })
 
 db.chocolates.insert_one({
-  "_id": "choco001",
+  "_id": "CHOC001",
   "nome": "Barra Clássica",
   "tipo": "Amargo Intenso",
-  "ingrediente_principal_id": "ing001"
+  "ingrediente_id": "ING001"
 })
 print("Dados inseridos com sucesso.")
 
-# --- II) Consulta ---
+# Consulta
 print("\n2. Executando consulta...")
-print("Consulta: Quais são os nomes dos ingredientes usados no chocolate com nome = 'Barra Clássica'?")
+print("Consulta: Qual o nome do ingrediente usado no chocolate com nome = 'Barra Clássica'?")
 
-# Busca o chocolate com nome 'Barra Clássica'
 chocolate_doc = db.chocolates.find_one({"nome": "Barra Clássica"})
 if chocolate_doc:
-  ingrediente_id = chocolate_doc["ingrediente_principal_id"]
+  ingrediente_id = chocolate_doc["ingrediente_id"]
   ingrediente_doc = db.ingredientes.find_one({"_id": ingrediente_id})
-  print("Ingredientes usados no chocolate 'Barra Clássica':")
   if ingrediente_doc:
     print(ingrediente_doc["nome"])
   else:
     print("Ingrediente não encontrado.")
 else:
   print("Chocolate não encontrado.")
-
-

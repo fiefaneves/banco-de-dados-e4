@@ -10,28 +10,29 @@ db = client["fabrica_de_chocolate"]
 db.chocolates.drop()
 db.ingredientes.drop()
 
-print("--- CENÁRIO 2: Embutido---")
+print("CENÁRIO 2: Embutido")
 
-# --- I) Implementação ---
 print("\n1. Inserindo dados...")
 db.chocolates.insert_one({
-  "_id": "choco002",
-  "nome": "Chocolate com Avelã",
+  "_id": "CHOC002",
+  "nome": "Chocolate Ao Leite",
   "tipo": "Ao Leite",
-  "ingrediente_principal": {
-    "nome": "Cacau Puro 100%",
-    "marca": "Amazônia"
-  }
+  "ingredientes": [
+    {
+      "nome": "Cacau",
+      "marca": "Amazônia"
+    }
+  ]
 })
 print("Dados inseridos com sucesso.")
 
-# --- II) Consulta ---
+# Consulta
 print("\n2. Executando consulta...")
-print("Consulta: Quais são os nomes dos ingredientes usados no chocolate com nome = 'Chocolate com Avelã'?")
+print("Consulta: Qual o nome do ingrediente usado no chocolate com nome = 'Chocolate Ao Leite'?")
 
-resultado = db.chocolates.find_one({"nome": "Chocolate com Avelã"})
-if resultado and "ingrediente_principal" in resultado:
-  ingrediente = resultado["ingrediente_principal"]
-  print(f"Ingrediente principal: {ingrediente.get('nome', 'Desconhecido')}")
+resultado = db.chocolates.find_one({"nome": "Chocolate Ao Leite"})
+if resultado and "ingredientes" in resultado:
+  for ingrediente in resultado["ingredientes"]:
+    print(f"Ingrediente: {ingrediente.get('nome', 'Desconhecido')}")
 else:
-  print("Chocolate 'Chocolate com Avelã' não encontrado ou não possui ingrediente principal.")
+  print("Chocolate 'Chocolate Ao Leite' não encontrado.")

@@ -10,25 +10,24 @@ db = client["fabrica_de_chocolate"]
 db.chocolates.drop()
 db.ingredientes.drop()
 
-print("--- CENÁRIO 3: Array de Referências ---")
+print("CENÁRIO 3: Array de Referências")
 
-# --- I) Implementação ---
 print("\n1. Inserindo dados...")
 db.ingredientes.insert_many([
-  {"_id": "ing002", "nome": "Cacau", "marca": "Manaus"},
-  {"_id": "ing003", "nome": "Açúcar", "marca": "Brasil"},
-  {"_id": "ing004", "nome": "Chocolate", "marca": "Amazônia"}
+  {"_id": "ING002", "nome": "Cacau 50%", "marca": "Manaus"},
+  {"_id": "ING003", "nome": "Açúcar", "marca": "Brasil"},
+  {"_id": "ING004", "nome": "Chocolate", "marca": "Amazônia"}
 ])
 
 db.chocolates.insert_one({
-  "_id": "choco003",
+  "_id": "CHOC003",
   "nome": "Chocolate Meio Amargo",
   "tipo": "Meio Amargo",
-  "ingredientes_ids": ["ing002", "ing003", "ing004"]
+  "ingredientes_ids": ["ING002", "ING003", "ING004"]
 })
 print("Dados inseridos com sucesso.")
 
-# --- II) Consulta ---
+# Consulta
 print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes dos ingredientes usados no chocolate com nome = 'Chocolate Meio Amargo'?")
 

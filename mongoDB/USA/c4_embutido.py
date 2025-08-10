@@ -10,12 +10,11 @@ db = client["fabrica_de_chocolate"]
 db.chocolates.drop()
 db.ingredientes.drop()
 
-print("--- CENÁRIO 4: Array de Documentos Embutidos ---")
+print("CENÁRIO 4: Array de Documentos Embutidos")
 
-# --- I) Implementação ---
 print("\n1. Inserindo dados...")
 db.chocolates.insert_one({
-  "_id": "choco004",
+  "_id": "CHOC004",
   "nome": "Trufa Especial ao Leite",
   "tipo": "Vegano",
   "ingredientes": [
@@ -26,7 +25,7 @@ db.chocolates.insert_one({
 })
 print("Dados inseridos com sucesso.")
 
-# --- II) Consulta ---
+# Consulta
 print("\n2. Executando consulta...")
 print("Consulta: Quais são os nomes dos ingredientes usados no chocolate com nome = 'Trufa Especial ao Leite'?")
 
