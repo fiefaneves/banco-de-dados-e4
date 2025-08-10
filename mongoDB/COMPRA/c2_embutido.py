@@ -18,16 +18,11 @@ def cenario_2(db):
             "cpf": "11111111111",
             "data_nascimento": "2010-05-15",
             "responsavel_id": "resp001",
-            "chocolates": [
+            "chocolate": [
                 {
                     "chocolate_id": "chocolate001",
                     "nome": "Chocolate ao Leite",
                     "tipo": "Ao Leite",
-                },
-                {
-                    "chocolate_id": "chocolate002",
-                    "nome": "Chocolate Amargo",
-                    "tipo": "Amargo",
                 }
             ]
         }, 
@@ -37,7 +32,7 @@ def cenario_2(db):
             "cpf": "22222222222",
             "data_nascimento": "2010-06-10",
             "responsavel_id": "resp002",
-            "chocolates": [
+            "chocolate": [
                 {
                     "chocolate_id": "chocolate003",
                     "nome": "Chocolate Branco",
@@ -51,7 +46,7 @@ def cenario_2(db):
             "cpf": "33333333333",
             "data_nascimento": "2010-07-20",
             "responsavel_id": "resp003",
-            "chocolates": [
+            "chocolate": [
                 {
                     "chocolate_id": "chocolate004",
                     "nome": "Chocolate Marrom",
