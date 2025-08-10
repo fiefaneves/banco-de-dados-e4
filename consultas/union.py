@@ -6,28 +6,27 @@ cursor = conn.cursor()
 
 cursor.execute(
 """
-    SELECT CPF
-    FROM Responsavel 
-        UNION
-    SELECT CPF
-    FROM Criança 
-    ORDER BY CPF
+    SELECT CPF_RESPONSAVEL as CPF, 'Responsavel' as Tipo
+    FROM Responsavel_Crianca
+    UNION
+    SELECT CPF_CRIANCA as CPF, 'Crianca' as Tipo
+    FROM Responsavel_Crianca
+    UNION
+    SELECT CPF, 'Funcionario' as Tipo
+    FROM Funcionario
+    ORDER BY CPF;
 """
 )
 
 resultado = cursor.fetchall()
 
-print("=" * 40)
 print("     TODOS OS CPFs DO SISTEMA")
-print("=" * 40)
 
 if resultado:
     for i, linha in enumerate(resultado, 1):
-        print(f"{i:2d}. {linha[0]}")
+        print(f"{i:2d}. {linha[0]} {linha[1]}")
     print(f"\nTotal: {len(resultado)} CPFs encontrados")
 else:
     print("Nenhum CPF encontrado no sistema.")
-
-print("=" * 40)
 
 conn.close()

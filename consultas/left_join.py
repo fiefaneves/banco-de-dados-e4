@@ -5,9 +5,9 @@ cursor = conn.cursor()
 
 # Nomes das crianças que não compraram chocolates
 cursor.execute('''
-    SELECT CRI.nome
-    FROM Crianca cri
-    LEFT JOIN Chocolate choco ON cri.CPF = choco.CPF_CRIANCA
+    SELECT RC.Nome_Crianca
+    FROM Responsavel_Crianca RC
+    LEFT JOIN Chocolate choco ON RC.CPF_CRIANCA = choco.CPF_CRIANCA
     WHERE choco.CPF_CRIANCA IS NULL;
 ''')
 
