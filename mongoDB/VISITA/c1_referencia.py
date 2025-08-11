@@ -17,11 +17,13 @@ print("--- CENÁRIO 1: VISITA referenciando apenas UM documento (Criança) ---")
 print("\n1. Inserindo dados...")
 
 db.visita_criancas.insert_one({
-    "_id": "crianca001",
+    "_id": "visita001",
     "nome": "Charlie Bucket",
     "cpf": "11111111111",
     "data_nascimento": "2010-05-15",
-    "responsavel_id": "resp001"
+    "responsavel_id": "resp001",
+    "data_visita": "2025-08-10",
+    "fabrica_id": "11.222.333/0001-44"
 })
 
 db.visita_fabricas.insert_many([
@@ -35,35 +37,22 @@ db.visita_fabricas.insert_many([
     }
 ])
 
-db.visitas.insert_many([
-    {
-        "_id": "vis001",
-        "data_visita": "2025-08-10",
-        "crianca_id": "crianca001",
-        "fabrica_cnpj": "11.222.333/0001-44"
-    },
-    {
-        "_id": "vis002",
-        "data_visita": "2025-09-02",
-        "crianca_id": "crianca001",
-        "fabrica_cnpj": "22.333.444/0001-55"
-    }
-])
 print("Dados inseridos com sucesso.")
 
 # --- II) Consulta ---
 print("\n2. Executando consulta...")
-print("Consulta: Quais são as visitas (data e CNPJ da fábrica) da criança com nome = 'Charlie Bucket'?")
+print("Consulta: Qual a data de fundação da fábrica visitada por Charlie Bucket?")
 
 crianca_doc = db.visita_criancas.find_one({"nome": "Charlie Bucket"})
 if crianca_doc:
-    visitas_cursor = db.visitas.find({"crianca_id": crianca_doc["_id"]}).sort("data_visita", 1)
-    visitas = list(visitas_cursor)
-    if visitas:
-        print(f"Visitas de {crianca_doc['nome']}:")
-        for v in visitas:
-            print(f"- {v.get('data_visita')} | Fábrica CNPJ: {v.get('fabrica_cnpj')}")
+    fabrica_id = crianca_doc.get("fabrica_id")
+    if fabrica_id:
+        fabrica_doc = db.visita_fabricas.find_one({"_id": fabrica_id})
+        if fabrica_doc:
+            print(f"Data de fundação da fábrica visitada por Charlie Bucket: {fabrica_doc.get('data_fundacao')}")
+        else:
+            print("Fábrica não encontrada.")
     else:
-        print("Nenhuma visita encontrada para a criança 'Charlie Bucket'.")
+        print("Criança não possui fábrica associada.")
 else:
     print("Criança não encontrada.")

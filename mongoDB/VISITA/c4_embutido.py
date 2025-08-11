@@ -21,14 +21,16 @@ db.visita_criancas.insert_one({
     "nome": "Charlie Bucket",
     "cpf": "11111111111",
     "data_nascimento": "2010-05-15",
-    "visitas": [
+    "fabrica": [
         {
             "data_visita": "2025-08-10",
-            "fabrica": { "cnpj": "11.222.333/0001-44", "data_fundacao": "1990-09-01" }
+            "cnpj": "11.222.333/0001-44",
+            "data_fundacao": "1990-09-01"
         },
         {
             "data_visita": "2025-09-02",
-            "fabrica": { "cnpj": "22.333.444/0001-55", "data_fundacao": "1995-03-12" }
+            "cnpj": "22.333.444/0001-55",
+            "data_fundacao": "1995-03-12"
         }
     ]
 })
@@ -40,10 +42,9 @@ print("\n2. Executando consulta...")
 print("Consulta: Listar as visitas embutidas da criança com nome = 'Charlie Bucket'.")
 
 doc = db.visita_criancas.find_one({"nome": "Charlie Bucket"})
-if doc and "visitas" in doc:
+if doc and "fabrica" in doc:
     print(f"Visitas embutidas de {doc['nome']}:")
-    for v in doc["visitas"]:
-        fab = v.get("fabrica", {})
-        print(f"- {v.get('data_visita')} | Fábrica CNPJ: {fab.get('cnpj')} | Fundação: {fab.get('data_fundacao')}")
+    for v in doc["fabrica"]:
+        print(f"- {v.get('data_visita')} | Fábrica CNPJ: {v.get('cnpj')} | Fundação: {v.get('data_fundacao')}")
 else:
     print("A criança não possui visitas embutidas.")

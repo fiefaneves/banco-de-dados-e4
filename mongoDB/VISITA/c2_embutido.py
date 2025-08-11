@@ -15,13 +15,6 @@ print("--- CENÁRIO 2: VISITA embutindo apenas UM documento (Fábrica) ---")
 
 # --- I) Implementação ---
 print("\n1. Inserindo dados...")
-db.visita_criancas.insert_one({
-    "_id": "crianca001",
-    "nome": "Charlie Bucket",
-    "cpf": "11111111111",
-    "data_nascimento": "2010-05-15",
-})
-
 db.visitas.insert_many([
     {
         "_id": "vis101",
@@ -36,8 +29,8 @@ db.visitas.insert_many([
     {
         "_id": "vis102",
         "data_visita": "2025-09-02",
-        "crianca_nome": "Charlie Bucket",
-        "crianca_cpf": "11111111111",
+        "crianca_nome": "Violet Beauregarde",
+        "crianca_cpf": "22222222222",
         "fabrica": {
             "cnpj": "22.333.444/0001-55",
             "data_fundacao": "1995-03-12"
@@ -49,7 +42,7 @@ print("Dados inseridos com sucesso.")
 
 # --- II) Consulta ---
 print("\n2. Executando consulta...")
-print("Consulta: Visitas (data e CNPJ da fábrica) da criança com nome = 'Charlie Bucket' (sem referência).")
+print("Consulta: Visitas (data e CNPJ da fábrica) da criança com nome = 'Charlie Bucket'.")
 
 visitas_cursor = db.visitas.find({"crianca_nome": "Charlie Bucket"}).sort("data_visita", 1)
 visitas = list(visitas_cursor)

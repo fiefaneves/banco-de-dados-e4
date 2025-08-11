@@ -16,56 +16,47 @@ print("--- CENÁRIO 3: Criança com ARRAY de REFERÊNCIAS para 'visitas' ---")
 # --- I) Implementação ---
 print("\n1. Inserindo dados...")
 
-db.visita_fabricas.insert_many([
-    {
-        "_id": "11.222.333/0001-44", 
-        "data_fundacao": "1990-09-01"
-    },
-    {
-        "_id": "22.333.444/0001-55", 
-        "data_fundacao": "1995-03-12"
-    }
-])
+db.visita_fabricas.insert_one({
+    "_id": "11.222.333/0001-44",
+    "data_fundacao": "1990-09-01",
+    "visitas_ids": ["vis201","vis202"]
+})
 
 db.visitas.insert_many([
     {
         "_id": "vis201",
         "data_visita": "2025-08-10",
-        "crianca_id": "crianca001",
-        "fabrica_cnpj": "11.222.333/0001-44"
+        "crianca_id": "crianca002",
+        "nome": "Violet Beauregarde",
+        "cpf": "22222222222",
+        "data_nascimento": "2011-05-15"
     },
     {
         "_id": "vis202",
         "data_visita": "2025-09-02",
         "crianca_id": "crianca001",
-        "fabrica_cnpj": "22.333.444/0001-55"
+        "nome": "Charlie Bucket",
+        "cpf": "11111111111",
+        "data_nascimento": "2010-05-15"
     }
 ])
-
-db.visita_criancas.insert_one({
-    "_id": "crianca001",
-    "nome": "Charlie Bucket",
-    "cpf": "11111111111",
-    "data_nascimento": "2010-05-15",
-    "visitas_ids": ["vis201", "vis202"] 
-})
 
 print("Dados inseridos com sucesso.")
 
 # --- II) Consulta ---
 print("\n2. Executando consulta...")
-print("Consulta: Buscar a criança por nome e listar as visitas referenciadas em 'visitas_ids'.")
+print("Consulta: Buscar a data de visita e nome da criança que visitaram a fábrica de CNPJ = 11.222.333/0001-44.")
 
-crianca_doc = db.visita_criancas.find_one({"nome": "Charlie Bucket"})
-if crianca_doc:
-    ids = crianca_doc.get("visitas_ids", [])
+fabrica_doc = db.visita_fabricas.find_one({"_id": "11.222.333/0001-44"})
+if fabrica_doc:
+    ids = fabrica_doc.get("visitas_ids", [])
     if ids:
         visitas = list(db.visitas.find({"_id": {"$in": ids}}).sort("data_visita", 1))
-        print(f"Visitas de {crianca_doc['nome']}:")
+        print(f"Visitas da fábrica {fabrica_doc['_id']}:")
         for v in visitas:
-            print(f"- {v.get('data_visita')} | Fábrica CNPJ: {v.get('fabrica_cnpj')}")
+            print(f"- {v.get('data_visita')} | Criança: {v.get('nome')}")
     else:
-        print("A criança não possui visitas referenciadas.")
+        print("A fábrica não possui visitas referenciadas.")
 else:
-    print("Criança não encontrada.")
+    print("Fábrica não encontrada.")
 
